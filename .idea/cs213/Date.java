@@ -1,5 +1,7 @@
-package edu.rutges.cs213;
+package cs213;
 
+
+import sun.plugin2.main.client.CALayerProvider;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -58,14 +60,12 @@ public class Date implements Comparable<Date>{
         setMonth( mm );
         setDay( dd );
     }
-
-    //take “mm/dd/yyyy” and create a Date object
-    public Date(String date) throws IllegalAccessException {
+    //take “mm/dd/yyyy” and create a FitnessManager.Date object
+    public Date(String date){
         String[] string = date.split("/");
         month = Integer.parseInt(string[0]);
         day = Integer.parseInt(string[1]);
         year = Integer.parseInt(string[2]);
-        if(!isValid()) throw new IllegalAccessException("invalid calendar date");
     }
 
     @Override

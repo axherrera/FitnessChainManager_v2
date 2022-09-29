@@ -1,12 +1,13 @@
-package edu.rutges.cs213;
+package FitnessManager;
 
 public enum Location {
-    Bridgewater ("Bridgewater", "08807", "Somerset County"),
-    Edison("Edison", "08837", "Middlesex County"),
+    BRIDGEWATER ("Bridgewater", "08807", "Somerset County"),
+    EDISON("Edison", "08837", "Middlesex County"),
 
-    Franklin("Franklin", "08873", "Somerset County"),
-    Piscataway("Piscataway", "08854", "Middlesex County"),
-    Somerville("Somerville", "08876", "Somerset County");
+    FRANKLIN("Franklin", "08873", "Somerset County"),
+    PISCATAWAY("Piscataway", "08854", "Middlesex County"),
+    SOMERVILLE("Somerville", "08876", "Somerset County"),
+    NA("NA", "NA", "NA");
     private final String township;
     private final String zipcode;
     private final String county;
@@ -35,11 +36,11 @@ public enum Location {
     }
 
     public static void main(String[] args) {
-        Location edison = Location.Edison;
-        Location Bridge = Location.Bridgewater;
-        Location Frank = Location.Franklin;
-        Location Somer = Location.Somerville;
-        Location Piscat = Location.Piscataway;
+        Location edison = Location.EDISON;
+        Location Bridge = Location.BRIDGEWATER;
+        Location Frank = Location.FRANKLIN;
+        Location Somer = Location.SOMERVILLE;
+        Location Piscat = Location.PISCATAWAY;
         System.out.println(edison);
 
     }

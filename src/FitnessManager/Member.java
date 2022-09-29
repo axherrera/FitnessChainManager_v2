@@ -1,6 +1,6 @@
-package edu.rutges.cs213;
+package FitnessManager;
 
-import java.util.Date;
+;
 
 public class Member implements Comparable<Member>{
     private String fname;
@@ -9,7 +9,13 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
 
-    public Member(String fname, String lname, Date dob, Date expire, edu.rutges.cs213.Location location) {
+    public Member(
+            String fname,
+            String lname,
+            Date dob,
+            Date expire,
+            Location location
+    ) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
@@ -17,8 +23,18 @@ public class Member implements Comparable<Member>{
         this.location = location;
     }
 
+    public Member(
+            String fname,
+            String lname,
+            Date dob
+    ) {
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+    }
+
     public String getFname() {
-        return fname;
+        return this.fname;
     }
 
     public void setFname(String fname) {
@@ -26,7 +42,7 @@ public class Member implements Comparable<Member>{
     }
 
     public String getLname() {
-        return lname;
+        return this.lname;
     }
 
     public void setLname(String lname) {
@@ -34,7 +50,7 @@ public class Member implements Comparable<Member>{
     }
 
     public Date getDob() {
-        return dob;
+        return this.dob;
     }
 
     public void setDob(Date dob) {
@@ -42,24 +58,30 @@ public class Member implements Comparable<Member>{
     }
 
     public Date getExpire() {
-        return expire;
+        return this.expire;
     }
 
     public void setExpire(Date expire) {
         this.expire = expire;
     }
 
-    public edu.rutges.cs213.Location getLocation() {
-        return location;
+    public Location getLocation() {
+        return this.location;
     }
 
-    public void setLocation(edu.rutges.cs213.Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
     @Override
     public String toString() {
-        return this.getFname() + ", " + this.getLname() + "DOB: " + this.getDob() + ", Membership expires: " + this.getExpire() + ", " + "Location:" + this.getLocation();
+        return (
+                this.fname + ", " +
+                this.lname +
+                "DOB: " + this.dob.toString() +
+                ", Membership expires: " + this.expire.toString() + ", " +
+                "FitnessManager.Location: " + this.location.toString()
+        );
     }
 
     @Override
@@ -100,11 +122,11 @@ public class Member implements Comparable<Member>{
         Date date2 = new Date("01/02/2022");
         Date date3 = new Date("01/02/2023");
 
-        Location location3 = Location.Bridgewater;
-        Location location2 = Location.Edison;
-        Location location1 = Location.Franklin;
-        Location location4 = Location.Piscataway;
-        Location location5 = Location.Somerville;
+        Location location3 = Location.BRIDGEWATER;
+        Location location2 = Location.EDISON;
+        Location location1 = Location.FRANKLIN;
+        Location location4 = Location.PISCATAWAY;
+        Location location5 = Location.SOMERVILLE;
 
         Member member1 = new Member("John", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);

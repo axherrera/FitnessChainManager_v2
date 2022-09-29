@@ -1,4 +1,4 @@
-package edu.rutges.cs213;
+package cs213;
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
@@ -17,7 +17,7 @@ public class MemberDatabase {
     }
     public boolean add(Member member) {
         int index=4;
-        Member[] mem = new Member[mlist.length + 1];
+        Member[] mem = new Member[this.mlist.length + 1];
         for(int i = 0; i < index; i++){
             if(member != null){
                 mem[i] = mlist[i];
@@ -40,6 +40,7 @@ public class MemberDatabase {
         for (int i = 0; i < mlist.length; i++){
             if(member.equals(mlist[i])){
                 mlist[i] = null;
+                return true;
             }
         }
         return false;
@@ -70,7 +71,7 @@ public class MemberDatabase {
     }
     //sort by last name and then first name
     public void printByName() {
-//        Member temp;
+//        FitnessManager.Member temp;
 //        for(int i = 0; i < mlist.length; i++){
 //            for(int j = 0; j < mlist.length; j++){
 //                if(mlist[i].compareTo(mlist[j]) > 0){

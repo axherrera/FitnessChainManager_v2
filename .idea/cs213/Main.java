@@ -1,8 +1,8 @@
-package edu.rutges.cs213;
+package cs213;
 
 public class Main {
     public static void main(String[] args) {
-//        Member a1 = new Member("hu", "aa", "12-21-2020","12-21-2023", "SOMERVILLE, 08876, SOMERSET);
+//        FitnessManager.Member a1 = new FitnessManager.Member("hu", "aa", "12-21-2020","12-21-2023", "SOMERVILLE, 08876, SOMERSET);
         Date d1 = new Date(2022,2,02);
         Date d2 = new Date(2022,2,02);
 

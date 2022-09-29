@@ -1,11 +1,4 @@
-package edu.rutges.cs213;
-
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Objects;
+package FitnessManager;
 
 public class Date implements Comparable<Date>{
 
@@ -65,8 +58,8 @@ public class Date implements Comparable<Date>{
         setDay( dd );
     }
 
-    //take “mm/dd/yyyy” and create a Date object
-    public Date(String date) throws IllegalAccessException {
+    //take “mm/dd/yyyy” and create a FitnessManager.Date object
+    public Date(String date) {
         String[] string = date.split("/");
         if(string.length != 3){
             throw new IllegalArgumentException("Invalide date");

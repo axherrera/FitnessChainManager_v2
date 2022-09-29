@@ -1,8 +1,4 @@
-package edu.rutges.cs213;
-
-import javax.xml.stream.Location;
-import java.util.Collections;
-import java.util.Date;
+package cs213;
 
 public class Member implements Comparable<Member>{
     private String fname;
@@ -11,12 +7,17 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
 
-    public Member(String fname, String lname, Date dob, Date expire, Location location){
-        this.fname = fname;
-        this.lname = lname;
+    public Member(String fname, String lname, Date dob, Date expire , Location location){
+        this.fname = fname.toLowerCase();
+        this.lname = lname.toLowerCase();
         this.dob = dob;
         this.expire = expire;
         this.location = location;
+    }
+    public Member(String fname, String lname, Date dob){
+        this.fname = fname.toLowerCase();
+        this.lname = lname.toLowerCase();
+        this.dob = dob;
     }
 
     public String getFname() {
@@ -61,7 +62,7 @@ public class Member implements Comparable<Member>{
 
     @Override
     public String toString() {
-        return this.getFname() + ", " + this.getLname() + "DOB: " + this.getDob() + " " + this.getExpire() + " " + "Location:" + this.getLocation();
+        return this.getFname() + ", " + this.getLname() + "DOB: " + this.getDob() + " " + this.getExpire() + " " + "FitnessManager.Location:" + this.getLocation();
     }
 
     @Override
@@ -97,7 +98,7 @@ public class Member implements Comparable<Member>{
     }
 
     public static void main(String[] args) {
-        edu.rutges.cs213.Location l = new edu.rutges.cs213.Location("Ed","08619", "Md");
+        Location l = Location.BRIDGEWATER;
 
         Date d1 = new Date("01/02/2026");
         Date d2 = new Date("01/02/2022");
