@@ -113,14 +113,19 @@ public class Member implements Comparable<Member>{
         if(expdiff != 0){
             return expdiff;
         }
+        int loc = this.location.compareTo(o.location);
+        if(loc != 0){
+            return loc;
+        }
         return 0;
     }
 
     public static void main(String[] args) {
 
         Date date1 = new Date("01/02/2026");
-        Date date2 = new Date("01/02/2022");
+        Date date2 = new Date("01/02/2000");
         Date date3 = new Date("01/02/2023");
+
 
         Location location3 = Location.BRIDGEWATER;
         Location location2 = Location.EDISON;
@@ -148,8 +153,8 @@ public class Member implements Comparable<Member>{
         md.add(member6);
 
 //        md.print();
-//        md.printByName();
-        md.printByCounty();
+        md.printByName();
+//        md.printByCounty();
 //        md.printByExpirationDate();
     }
 }

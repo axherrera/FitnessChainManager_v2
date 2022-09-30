@@ -1,5 +1,10 @@
 package FitnessManager;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class Date implements Comparable<Date>{
 
     public static final int MAX_YEAR = 9999;
@@ -108,7 +113,14 @@ public class Date implements Comparable<Date>{
         }
     return true;
     }
-
+    public boolean hasAgeGreaterthanEighteen(){
+        Calendar cd = new GregorianCalendar();
+        int age = cd.get(Calendar.YEAR) - year;
+        if(age < 18){
+            return false;
+        }
+        return true;
+    }
     @Override
     public String toString() {
         return this.getMonth() + "/" + this.getDay() + "/" + this.getYear();
@@ -125,13 +137,14 @@ public class Date implements Comparable<Date>{
     }
 
     public static void main(String[] args) throws IllegalAccessException {
-        Date date = new Date("01/02/2029");
+        Date date = new Date("01/02/1990");
         Date date1 = new Date("01/02/2022");
 
-        System.out.println(date.toString());
-        System.out.println(date.isValid());
-        System.out.println(date.equals(date1));
-        System.out.println(date.getYear());
+//        System.out.println(date.toString());
+//        System.out.println(date.isValid());
+//        System.out.println(date.equals(date1));
+//        System.out.println(date.getYear());
+        System.out.println(date.hasAgeGreaterthanEighteen());
     }
 }
 

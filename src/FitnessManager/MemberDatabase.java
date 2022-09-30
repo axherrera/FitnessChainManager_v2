@@ -16,9 +16,7 @@ public class MemberDatabase {
         }
         mlist = temp;
         size+=4;
-
     }
-
     //method to check if database is full
     private boolean isFull(){
         for(int i=0; i<size; i++){
@@ -53,13 +51,17 @@ public class MemberDatabase {
     }
     // remove the member from the array
     public boolean remove( Member member) {
-        if (find(member) == -1)
+        int index = find(member);
+        if (index == -1)
             return false;
         mlist[find(member)] = null;
+        for(int i = index+1; i <size; i++){
+            Member temp = mlist[i-1];
+            mlist[i-1]=mlist[i];
+            mlist[i]=temp;
+        }
         return true;
     }
-
-
 
     //print the array contents as is
     public void print() {
@@ -72,33 +74,43 @@ public class MemberDatabase {
     //sort by county and then zipcode
     //this is giving a null pointer exception
     public void printByCounty() {
-        for(int i = 0; i < mlist.length; i++){
-            for(int j = i+1; j< mlist.length; j++){
-                if(mlist[i].getLocation().getCounty().compareTo(mlist[j].getLocation().getZipcode()) > 0){
-                    System.out.println(mlist[j]);
-                }
+        for(int i = 1; i < size; ++i){
+            Member k = mlist[i];
+            int j = i - 1;
+            while( j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLocation().getRank() > k.getLocation().getRank())){
+                System.out.println(Math.max(mlist[j].getLocation().getRank(), k.getLocation().getRank()));
+                mlist[j + 1] = mlist[j];
+                j = j - 1;
             }
-
+            mlist[j + 1] = k;
         }
-
+        print();
     }
     //sort by the expiration date
     public void printByExpirationDate() {
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                if(mlist[i].getExpire().compareTo(mlist[j].getExpire()) > 1){
-                    System.out.println(mlist[i]);
-                }
+        for(int i = 1; i < size; ++i) {
+            Member k = mlist[i];
+            int j = i - 1;
+            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) &&(mlist[j].getExpire().compareTo(k.getExpire())) > 0){
+                mlist[j + 1] = mlist[j];
+                j = j - 1;
             }
+            mlist[j + 1] = k;
         }
+        print();
     }
     //sort by last name and then first name
     public void printByName() {
         for(int i = 0; i < size; i++){
-            if((mlist[i].getLname().compareTo(mlist[i].getFname()) > 0) ){
-                System.out.println(mlist[i]);
+            Member k = mlist[i];
+            int j = i - 1;
+            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getFname().compareTo(k.getFname())) > 0){
+                mlist[j + 1] = mlist[j];
+                j = j - 1;
             }
+            mlist[j + 1] = k;
         }
+        print();
     }
 
     public static void main(String[] args) {
@@ -112,13 +124,13 @@ public class MemberDatabase {
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
 
-        Member member1 = new Member("John", "Lukas ", date1, date2, location1);
-        Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
-        Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
+        Member member1 = new Member("John", "Lukas ", date1, date2, location5);
+        Member member2 = new Member("Tomas", "Mike ", date1, date2, location5);
+        Member member3 = new Member("Micheal", "Tomas ", date2, date1, location4);
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
-        Member member5 = new Member("Gebre", "Bajo ", date1, date2, location5);
-        Member member6 = new Member("m6", "dskjfl ", date1, date2, location4);
-        Member member7 = new Member("m7", "skdlflkdsf ", date1, date2, location5);
+        Member member5 = new Member("Gebre", "Bajo ", date1, date2, location1);
+        Member member6 = new Member("m6", "dskjfl ", date1, date2, location2);
+        Member member7 = new Member("m7", "skdlflkdsf ", date1, date2, location3);
 
         MemberDatabase md = new MemberDatabase();
         md.add(member1);
@@ -129,13 +141,16 @@ public class MemberDatabase {
         md.add(member6);
         md.add(member7);
 
-        md.remove(member3);
+        md.remove(member1);
 
-        md.print();
+        Location L = Location.BRIDGEWATER;
+        System.out.println(L.getCounty());
+
+//        md.print();
         //md.printByName();
         //System.out.println(md.find(member1));
         //md.printByExpirationDate();
-        //md.printByCounty();
+//        md.printByCounty();
 
     }
 }
