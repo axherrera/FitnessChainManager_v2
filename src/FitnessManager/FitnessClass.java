@@ -3,55 +3,41 @@ package FitnessManager;
 public class FitnessClass {
 
     private MemberDatabase checkedIn = new MemberDatabase();
-    private String instructor;
-    private Time time;
     private ClassType classType;
 
-    public enum Time {
-        MORNING("09:00"),
-        AFTERNOON("14:00");
 
-        private String time;
 
-        Time(String s) {
-            this.time = s;
-        }
-
-        public String toString(){
-            return this.time;
-        }
-    }
-    public enum ClassType {
-        PILATES("Pilates"),
-        SPINNING("Spinning"),
-        CARDIO("Cardio");
-
-        private String classtype;
-
-        ClassType(String classtype) {
-            this.classtype = classtype;
-        }
-
-        public String toString(){
-            return this.classtype;
-        }
-    }
-
-    public FitnessClass(String instructor, Time time, ClassType classType){
-        this.instructor = instructor;
-        this.time = time;
+    public FitnessClass(ClassType classType){
         this.classType = classType;
     }
 
-//    public boolean checkIn(FitnessManager.Member member){
-//
-//    }
-//
-//    public boolean dropClass(FitnessManager.Member member){
-//
-//    }
-//
-//    public void classInfo() {
-//
-//    }
+    public void checkIn(Member member){
+        checkedIn.add(member);
+        System.out.printf("%s %s checked into %s\n", member.getFname(), member.getLname(), classType.getName());
+    }
+
+    public void dropClass(Member member){
+        if(!checkedIn.remove(member)){
+            System.out.printf("%s %s is not a participant in %s\n", member.getFname(), member.getLname(), classType.getName());
+            return;
+        }
+        System.out.printf("%s %s dropped %s\n", member.getFname(), member.getLname(), classType.getName());
+    }
+
+    public Member find(Member m){
+        return this.checkedIn.getMember(m);
+    }
+
+    public void classInfo() {
+        System.out.println(classType.toString());
+        if(checkedIn.isEmpty())
+            return;
+        System.out.println("   ** participants **");
+        checkedIn.printDatabase();
+    }
+
+    public ClassType getClassType(){
+        return this.classType;
+    }
+
 }

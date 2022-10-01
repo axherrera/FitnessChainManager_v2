@@ -23,15 +23,6 @@ public class Member implements Comparable<Member>{
         this.location = location;
     }
 
-    public Member(
-            String fname,
-            String lname,
-            Date dob
-    ) {
-        this.fname = fname;
-        this.lname = lname;
-        this.dob = dob;
-    }
 
     public String getFname() {
         return this.fname;
@@ -77,10 +68,10 @@ public class Member implements Comparable<Member>{
     public String toString() {
         return (
                 this.fname + ", " +
-                this.lname +
-                "DOB: " + this.dob.toString() +
-                ", Membership expires: " + this.expire.toString() + ", " +
-                "FitnessManager.Location: " + this.location.toString()
+                        this.lname +
+                        " DOB: " + this.dob.toString() +
+                        ", Membership expires: " + this.expire.toString() + ", " +
+                        "Location: " + this.location.toString()
         );
     }
 
@@ -92,16 +83,16 @@ public class Member implements Comparable<Member>{
             return false;
         }
         Member mem = (Member) obj;
-        return (fname.equals(mem.fname) && lname.equals(mem.lname) && dob.equals(mem.dob));
+        return (fname.toLowerCase().equals(mem.fname.toLowerCase()) && lname.toLowerCase().equals(mem.lname.toLowerCase()) && dob.equals(mem.dob));
     }
 
     @Override
     public int compareTo(Member o) {
-        int fdiff = this.fname.compareTo(o.fname);
+        int fdiff = this.fname.toLowerCase().compareTo(o.fname.toLowerCase());
         if(fdiff != 0){
             return fdiff;
         }
-        int ldiff = this.lname.compareTo(o.lname);
+        int ldiff = this.lname.toLowerCase().compareTo(o.lname.toLowerCase());
         if(ldiff != 0){
             return ldiff;
         }
@@ -113,14 +104,19 @@ public class Member implements Comparable<Member>{
         if(expdiff != 0){
             return expdiff;
         }
+        int loc = this.location.compareTo(o.location);
+        if(loc != 0){
+            return loc;
+        }
         return 0;
     }
 
     public static void main(String[] args) {
 
         Date date1 = new Date("01/02/2026");
-        Date date2 = new Date("01/02/2022");
+        Date date2 = new Date("01/02/2000");
         Date date3 = new Date("01/02/2023");
+
 
         Location location3 = Location.BRIDGEWATER;
         Location location2 = Location.EDISON;
@@ -148,9 +144,8 @@ public class Member implements Comparable<Member>{
         md.add(member6);
 
 //        md.print();
-//        md.printByName();
-        md.printByCounty();
+        md.printByName();
+//        md.printByCounty();
 //        md.printByExpirationDate();
     }
 }
-

@@ -1,5 +1,6 @@
 package FitnessManager;
 
+import java.util.Calendar;
 public class Date implements Comparable<Date>{
 
     public static final int MAX_YEAR = 9999;
@@ -106,9 +107,24 @@ public class Date implements Comparable<Date>{
         if( month == 4 || month == 6 || month == 9 || month == 11){
             return day <= 30;
         }
-    return true;
+        return true;
+    }
+    public boolean ofAge(){
+        Calendar cd = Calendar.getInstance();
+        int yrs = cd.get(Calendar.YEAR) - this.year;
+        int mon = cd.get(Calendar.MONTH) + 1 - this.month;
+        int day = cd.get(Calendar.DAY_OF_MONTH) - this.day;
+        return (yrs > 18) ^ (yrs == 18 && ((mon==0 && day>=0) ^ (mon>0)));
+
     }
 
+    public boolean isFuture(){
+        Calendar cd = Calendar.getInstance();
+        int yrs = cd.get(Calendar.YEAR) - this.year;
+        int mon = cd.get(Calendar.MONTH) + 1 - this.month;
+        int day = cd.get(Calendar.DAY_OF_MONTH) - this.day;
+        return (yrs < 0 ^ (yrs == 0 && (mon==0 && day<=0) ^ (mon<0)));
+    }
     @Override
     public String toString() {
         return this.getMonth() + "/" + this.getDay() + "/" + this.getYear();
@@ -125,14 +141,12 @@ public class Date implements Comparable<Date>{
     }
 
     public static void main(String[] args) throws IllegalAccessException {
-        Date date = new Date("01/02/2029");
+        Date date = new Date("09/30/2022");
         Date date1 = new Date("01/02/2022");
 
-        System.out.println(date.toString());
-        System.out.println(date.isValid());
-        System.out.println(date.equals(date1));
-        System.out.println(date.getYear());
+//        System.out.println(date.toString());
+//        System.out.println(date.isValid());
+//        System.out.println(date.equals(date1));
+//        System.out.println(date.getYear());
     }
 }
-
-

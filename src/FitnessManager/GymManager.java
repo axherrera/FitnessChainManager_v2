@@ -5,80 +5,218 @@ import java.util.StringTokenizer;
 
 public class GymManager {
     MemberDatabase database;
+    FitnessClass classes[];
+    private final int numClasses = 3;
+
+    private final Date NA = new Date("00/00/0000");
 
     public GymManager() {
         this.database = new MemberDatabase();
+        this.classes = new FitnessClass[numClasses];
+        classes[0] = new FitnessClass(ClassType.PILATES);
+        classes[1] = new FitnessClass(ClassType.SPINNING);
+        classes[2] = new FitnessClass(ClassType.CARDIO);
     }
 
-    /*private boolean validateData(
-            FitnessManager.Date dob,
-            FitnessManager.Date eDate,
-            FitnessManager.Location location
+    private Member validateMemberData(
+            String fname,
+            String lname,
+            String birth,
+            String expir,
+            String locat
     ){
-        //if(eDate.isValid() && )
-    }*/
+        Date bday = new Date(birth);
+        Date eDate = new Date(expir);
+        Location loc = Location.idLocation(locat);
 
-    public Location idLocation(String location) {
-        location.toLowerCase();
-        switch (location) {
-            case "piscataway":
-                return Location.PISCATAWAY;
-            case "bridgewater":
-                return Location.BRIDGEWATER;
-            case "edison":
-                return Location.EDISON;
-            case "franklin":
-                return Location.FRANKLIN;
-            case "somerville":
-                return Location.SOMERVILLE;
-            default:
-                return Location.NA;
+        if(!dateValidation(fname, lname, bday, Operation.DOB))
+            return null;
+        if(!dateValidation(fname, lname, eDate, Operation.AEXP))
+            return null;
+        if(loc==Location.NA){
+            System.out.printf("%s: invalid location!\n", locat);
+            return null;
         }
+        Member tempMem = new Member(fname, lname, bday, eDate, loc);
+        if(database.getMember(tempMem)!=null){
+            System.out.printf("%s %s is already in the database.\n", tempMem.getFname(), tempMem.getLname());
+            return null;
+        }
+        return tempMem;
+    }
+    private boolean dateValidation(String fname, String lname, Date date, Operation op){
+        if(op == Operation.DOB){
+            if(!date.isValid()){
+                System.out.printf("DOB %s: invalid calendar date!\n", date.toString());
+                return false;
+            }
+            else if(date.isFuture()){
+                System.out.printf("DOB %s: cannot be today or a future date!\n", date.toString());
+                return false;
+            }
+            else if(!date.ofAge()){
+                System.out.printf("DOB %s: must be 18 or older to join!\n", date.toString());
+                return false;
+            }
+            else return true;
+        }
+        else if (op == Operation.EXP){
+            if(!date.isValid()){
+                System.out.printf("Expiration date %s: invalid calendar date!\n", date.toString());
+                return false;
+            }
+            else if(!date.isFuture()){
+                System.out.printf("%s %s %s membership expired\n", fname, lname, date.toString());
+                return false;
+            }
+            else return true;
+        }
+        else if(op == Operation.AEXP){
+            if(!date.isValid()){
+                System.out.printf("Expiration date %s: invalid calendar date!\n", date.toString());
+                return false;
+            }
+            else return true;
+        }
+        return false;
+    }
+
+    //check that the there is no conflict with other classes, member is not already checked in
+    private boolean checkInValidate(Member tempMem, ClassType classType) {
+        for(FitnessClass fitnessClass: classes){
+            if(fitnessClass.find(tempMem)==null)
+                continue;
+            if(fitnessClass.getClassType()!=classType && fitnessClass.getClassType().getTime()==classType.getTime()){
+                System.out.printf(
+                        "%s time conflict -- %s %s has already checked in %s.\n",
+                        classType.getName(),
+                        tempMem.getFname(),
+                        tempMem.getLname(),
+                        fitnessClass.getClassType().getName()
+                );
+                return false;
+            }
+            else if(fitnessClass.getClassType()==classType){
+                System.out.printf(
+                        "%s %s has already checked in %s\n",
+                        tempMem.getFname(),
+                        tempMem.getLname(),
+                        classType.getName()
+                );
+                return false;
+            }
+        }
+        return true;
     }
 
     private void addMember(Scanner sc){
         StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
-        if(tk.countTokens()!= 5) System.out.println("Invalid number of tokens");
-        String fName = tk.nextToken();
-        String lName = tk.nextToken();
-        Date dob = new Date(tk.nextToken());
-        Date eDate = new Date(tk.nextToken());
-        Location loc = idLocation(tk.nextToken());
-        //if(!validateData(dob, eDate, loc)) return;
-        database.add(new Member(fName,lName, dob, eDate, loc));
-        System.out.println(fName + " " + lName + " added.");
-    }
-    private void displayMemebers(){
-        this.database.print();
+        Member tempMem = validateMemberData(tk.nextToken(), tk.nextToken(), tk.nextToken(), tk.nextToken(), tk.nextToken());
+        if(tempMem==null)
+            return;
+        database.add(tempMem);
+        System.out.printf("%s %s added.\n", tempMem.getFname(), tempMem.getLname());
     }
     private void removeMember(Scanner sc){
         StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
-        if(tk.countTokens()!= 3) System.out.println("Invalid number of tokens");
-        String fName = tk.nextToken();
-        String lName = tk.nextToken();
-        Date dob = new Date(tk.nextToken());
-        if(!this.database.remove(new Member(fName, lName, dob))) System.out.println("Non-existent FitnessManager.Member");
-        System.out.println("FitnessManager.Member Removed");
+        Member tempMem = new Member(tk.nextToken(), tk.nextToken(), new Date(tk.nextToken()), NA, Location.NA);
+        if(!this.database.remove(tempMem)) {
+            System.out.println("Non-existent Member");
+            return;
+        }
+        System.out.println("Member Removed");
 
     }
-    private void diplayByCounty(){
-        this.database.printByCounty();
+    private void displayClassSchedule(){
+        System.out.println("\n-Fitness Classes-");
+        for(FitnessClass fitnessClass:classes){
+            fitnessClass.classInfo();
+        }
+        System.out.println();
     }
-    private void displayByEDate(){
-        this.database.printByExpirationDate();
-    }
-    private void displayByName(){
-        this.database.printByName();
-    }
-    private void displayClassSchedule(String token){
 
-    }
-    private void checkinToClass(String token){
+    private void checkinToClass(Scanner sc){
+        StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
+        String isClass = tk.nextToken();
+        ClassType classtype = ClassType.idClassType(isClass);
 
-    }
-    private void dropClass(String token){
+        if(classtype == ClassType.NA) {
+            System.out.printf("%s class does not exist\n", isClass);
+            return;
+        }
 
+        String fname = tk.nextToken();
+        String lname = tk.nextToken();
+        Date bday = new Date(tk.nextToken());
+
+        //validate dob, then validate member, then validate member's expiration date
+        if(!dateValidation(fname, lname, bday, Operation.DOB))
+            return;
+        Member tempMem = classes[classtype.getIndex()].find(new Member(fname, lname, bday, NA, Location.NA));
+        if(!checkInValidate(tempMem, classtype))
+            return;
+        if(!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
+            return;
+
+        classes[classtype.getIndex()].checkIn(tempMem);
+        System.out.printf("%s %s checked into cardio\n",fname, lname);
     }
+
+    private void dropClass(Scanner sc){
+        StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
+        String isClass = tk.nextToken();
+        ClassType classtype = ClassType.idClassType(isClass);
+
+        if(classtype == ClassType.NA) {
+            System.out.printf("%s class does not exist\n", isClass);
+            return;
+        }
+
+        String fname = tk.nextToken();
+        String lname = tk.nextToken();
+        Date bday = new Date(tk.nextToken());
+
+        if(!dateValidation(fname, lname, bday, Operation.DOB))
+            return;
+
+        classes[classtype.getIndex()].dropClass(new Member(fname, lname, bday, NA, Location.NA));
+    }
+
+    private void addOrDropClass(Scanner sc, Operation op){
+        StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
+        String isClass = tk.nextToken();
+        ClassType classtype = ClassType.idClassType(isClass);
+
+        if(classtype == ClassType.NA) {
+            System.out.printf("%s class does not exist\n", isClass);
+            return;
+        }
+
+        String fname = tk.nextToken();
+        String lname = tk.nextToken();
+        Date bday = new Date(tk.nextToken());
+
+        if(!dateValidation(fname, lname, bday, Operation.DOB))
+            return;
+
+        if(op == Operation.DROP){
+            classes[classtype.getIndex()].dropClass(new Member(fname, lname, bday, NA, Location.NA));
+            return;
+        }
+
+        if(database.getMember(new Member(fname, lname, bday, NA, Location.NA))==null){
+            System.out.printf("%s %s %s is not in the database.\n", fname, lname, bday);
+            return;
+        }
+        Member tempMem = database.getMember(new Member(fname, lname, bday, NA, Location.NA));
+        if(!checkInValidate(tempMem, classtype))
+            return;
+        if(!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
+            return;
+
+        classes[classtype.getIndex()].checkIn(tempMem);
+    }
+
 
     private void checkOP(String op, Scanner sc){
         switch (op) {
@@ -89,28 +227,28 @@ public class GymManager {
                 removeMember(sc);
                 break;
             case "P":
-                displayMemebers();
+                this.database.printDatabase();
                 break;
             case "PC":
-                diplayByCounty();
+                this.database.printByCounty();
                 break;
             case "PN":
-                displayByName();
+                this.database.printByName();;
                 break;
             case "PD":
-                displayByEDate();
+                this.database.printByExpirationDate();
                 break;
             case "S":
-
+                displayClassSchedule();
                 break;
             case "C":
-
+                addOrDropClass(sc, Operation.CHK);
                 break;
             case "D":
-
+                addOrDropClass(sc, Operation.DROP);
                 break;
             default:
-                System.out.println(op + "is an invalid command!");
+                System.out.println(op + " is an invalid command!\n");
         }
     }
 
@@ -118,7 +256,7 @@ public class GymManager {
         System.out.println("Gym Manager running...");
         Scanner scan = new Scanner(System.in);
         String op = scan.next();
-        while(op != "Q"){
+        while(!op.equals("Q")){
             checkOP(op, scan);
             op = scan.next();
         }
