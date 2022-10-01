@@ -104,7 +104,7 @@ public class MemberDatabase {
         for(int i = 0; i < size; i++){
             Member k = mlist[i];
             int j = i - 1;
-            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getFname().compareTo(k.getFname())) > 0){
+            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLname().compareTo(k.getLname())) > 0){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
