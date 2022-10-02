@@ -88,35 +88,19 @@ public class Member implements Comparable<Member>{
 
     @Override
     public int compareTo(Member o) {
-        int fdiff = this.fname.toLowerCase().compareTo(o.fname.toLowerCase());
-        if(fdiff != 0){
-            return fdiff;
+        int comp = this.fname.compareTo(o.fname);
+        if(comp == 0){
+            return this.lname.compareTo(o.lname);
+        } else{
+            return comp;
         }
-        int ldiff = this.lname.toLowerCase().compareTo(o.lname.toLowerCase());
-        if(ldiff != 0){
-            return ldiff;
-        }
-        int dobdiff = this.dob.compareTo(o.dob);
-        if(dobdiff != 0){
-            return dobdiff;
-        }
-        int expdiff = this.expire.compareTo(o.expire);
-        if(expdiff != 0){
-            return expdiff;
-        }
-        int loc = this.location.compareTo(o.location);
-        if(loc != 0){
-            return loc;
-        }
-        return 0;
     }
 
     public static void main(String[] args) {
 
         Date date1 = new Date("01/02/2026");
-        Date date2 = new Date("01/02/2000");
+        Date date2 = new Date("01/02/2022");
         Date date3 = new Date("01/02/2023");
-
 
         Location location3 = Location.BRIDGEWATER;
         Location location2 = Location.EDISON;
@@ -124,11 +108,11 @@ public class Member implements Comparable<Member>{
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
 
-        Member member1 = new Member("John", "Lukas ", date1, date2, location1);
+        Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
         Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
-        Member member5 = new Member("Gebre", "Bajo ", date1, date2, location5);
+        Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("n", "k ", date3, date2, location5);
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -144,8 +128,9 @@ public class Member implements Comparable<Member>{
         md.add(member6);
 
 //        md.print();
-        md.printByName();
-//        md.printByCounty();
+//        md.printByName();
+        md.printByCounty();
 //        md.printByExpirationDate();
     }
 }
+

@@ -80,6 +80,8 @@ public class MemberDatabase {
         return true;
     }
 
+
+
     //print the array contents as is
     private void print() {
         for(int i = 0; i < size; i++){
@@ -108,7 +110,6 @@ public class MemberDatabase {
             Member k = mlist[i];
             int j = i - 1;
             while( j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLocation().getRank() > k.getLocation().getRank())){
-                //System.out.println(Math.max(mlist[j].getLocation().getRank(), k.getLocation().getRank()));
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
@@ -144,7 +145,7 @@ public class MemberDatabase {
         for(int i = 0; i < size; i++){
             Member k = mlist[i];
             int j = i - 1;
-            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getFname().compareTo(k.getFname())) > 0){
+            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLname().compareTo(k.getLname())) > 0){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
@@ -165,13 +166,13 @@ public class MemberDatabase {
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
 
-        Member member1 = new Member("John", "Lukas ", date1, date2, location5);
-        Member member2 = new Member("Tomas", "Mike ", date1, date2, location5);
-        Member member3 = new Member("Micheal", "Tomas ", date2, date1, location4);
+        Member member1 = new Member("John", "Lukas ", date1, date2, location1);
+        Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
+        Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
-        Member member5 = new Member("Gebre", "Bajo ", date1, date2, location1);
-        Member member6 = new Member("m6", "dskjfl ", date1, date2, location2);
-        Member member7 = new Member("m7", "skdlflkdsf ", date1, date2, location3);
+        Member member5 = new Member("Gebre", "Bajo ", date1, date2, location5);
+        Member member6 = new Member("m6", "dskjfl ", date1, date2, location4);
+        Member member7 = new Member("m7", "skdlflkdsf ", date1, date2, location5);
 
         MemberDatabase md = new MemberDatabase();
         md.add(member1);
@@ -182,16 +183,13 @@ public class MemberDatabase {
         md.add(member6);
         md.add(member7);
 
-        md.remove(member1);
+        md.remove(member3);
 
-        Location L = Location.BRIDGEWATER;
-        System.out.println(L.getCounty());
-
-//        md.print();
+        md.print();
         //md.printByName();
         //System.out.println(md.find(member1));
         //md.printByExpirationDate();
-//        md.printByCounty();
+        //md.printByCounty();
 
     }
 }

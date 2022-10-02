@@ -141,12 +141,15 @@ public class Date implements Comparable<Date>{
     }
 
     public static void main(String[] args) throws IllegalAccessException {
-        Date date = new Date("09/30/2022");
+        Date date = new Date("01/02/1990");
         Date date1 = new Date("01/02/2022");
 
 //        System.out.println(date.toString());
 //        System.out.println(date.isValid());
 //        System.out.println(date.equals(date1));
 //        System.out.println(date.getYear());
+        System.out.println(date.hasAgeGreaterthanEighteen());
     }
 }
+
+
