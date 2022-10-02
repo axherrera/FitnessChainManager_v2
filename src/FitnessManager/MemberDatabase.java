@@ -1,56 +1,84 @@
 package FitnessManager;
 
+/**
+ * Created a MemberDatabase class
+ * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ */
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
     private final int NOT_FOUND = -1;
+
+    /**
+     * It initializes the array size
+     */
     public MemberDatabase() {
         mlist = new Member[4];
         size = 4;
     }
 
-    // grow the size of the array
+    /**
+     * grow the size of the array
+     */
     private void grow() {
         Member[] temp = new Member[size+4];
         for(int i = 0; i<size; i++){
-            temp[i]=mlist[i];
+            temp[i] = mlist[i];
         }
         mlist = temp;
         size+=4;
     }
-    //method to check if database is full
+
+    /**
+     * A method to check if database is full
+     * @return boolean
+     */
     private boolean isFull(){
-        for(int i=0; i<size; i++){
-            if(mlist[i]==null)
+        for(int i = 0; i < size; i++){
+            if(mlist[i] == null)
                 return false;
         }
         return true;
     }
 
+    /**
+     * To check is the array is empty
+     * @return boolean
+     */
     public boolean isEmpty(){
-        for(int i=0; i<size; i++){
+        for(int i = 0; i < size; i++){
             if(mlist[i] != null)
                 return false;
         }
         return true;
     }
 
-    //add member to the array
+    /**
+     * Add member to the array
+     * If the array empty apply the grow method
+     * @param member member
+     * @return boolean
+     */
     public boolean add (Member member) {
         if(isFull())
             grow();
-        else if(find(member)!=NOT_FOUND)
+        else if(find(member) != NOT_FOUND)
             return false;
         else
-            for(int i = 0; i<size; i++){
-            if(mlist[i]==null){
-                mlist[i]=member;
+            for(int i = 0; i < size; i++){
+            if(mlist[i] == null){
+                mlist[i] = member;
                 return true;
             }
         }
         return false;
     }
-    // find a member from the array
+
+    /**
+     * Find a member from the array
+     * @param member
+     * @return
+     */
     private int find(Member member) {
         for(int i = 0; i < size; i++){
             if(member.equals(mlist[i])){
@@ -60,13 +88,22 @@ public class MemberDatabase {
         return NOT_FOUND;
     }
 
+    /**
+     * To get the member from the array
+     * @param m member
+     * @return array list
+     */
     public Member getMember(Member m){
-         if(find(m)==NOT_FOUND)
+         if(find(m) == NOT_FOUND)
              return null;
          return mlist[find(m)];
     }
 
-    // remove the member from the array
+    /**
+     * Remove the member from the array
+     * @param member member
+     * @return boolean
+     */
     public boolean remove( Member member) {
         int index = find(member);
         if (index == NOT_FOUND)
@@ -74,15 +111,15 @@ public class MemberDatabase {
         mlist[find(member)] = null;
         for(int i = index+1; i <size; i++){
             Member temp = mlist[i-1];
-            mlist[i-1]=mlist[i];
-            mlist[i]=temp;
+            mlist[i-1] = mlist[i];
+            mlist[i] = temp;
         }
         return true;
     }
 
-
-
-    //print the array contents as is
+    /**
+     * Printing the array contents as is
+     */
     private void print() {
         for(int i = 0; i < size; i++){
             if(this.mlist[i] != null)
@@ -91,8 +128,10 @@ public class MemberDatabase {
         System.out.println("-end of list-\n");
     }
 
-    //sort by county and then zipcode
-    //this is giving a null pointer exception
+    /**
+     * prints after sorted by county and then zipcode
+     * this is giving a null pointer exception
+     */
     public void printDatabase(){
         if(isEmpty()){
             System.out.println("Member database is empty!");
@@ -101,6 +140,11 @@ public class MemberDatabase {
         System.out.println("-list of members-");
         print();
     }
+
+    /**
+     * Prints by county
+     * it sorts by county
+     */
     public void printByCounty() {
         if(isEmpty()){
             System.out.println("Member database is empty!");
@@ -109,7 +153,7 @@ public class MemberDatabase {
         for(int i = 1; i < size; ++i){
             Member k = mlist[i];
             int j = i - 1;
-            while( j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLocation().getRank() > k.getLocation().getRank())){
+            while( j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLocation().getRank() > k.getLocation().getRank())){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
@@ -118,7 +162,10 @@ public class MemberDatabase {
         System.out.println("-list of members sorted by county and zipcode-");
         print();
     }
-    //sort by the expiration date
+
+    /**
+     * Sort by the expiration date
+     */
     public void printByExpirationDate() {
         if(isEmpty()){
             System.out.println("Member database is empty!");
@@ -127,7 +174,7 @@ public class MemberDatabase {
         for(int i = 1; i < size; ++i) {
             Member k = mlist[i];
             int j = i - 1;
-            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) &&(mlist[j].getExpire().compareTo(k.getExpire())) > 0){
+            while(j >= 0 && (mlist[j] != null && mlist[i] != null) &&(mlist[j].getExpire().compareTo(k.getExpire())) > 0){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
@@ -136,7 +183,10 @@ public class MemberDatabase {
         System.out.println("-list of members sorted by membership expiration date-");
         print();
     }
-    //sort by last name and then first name
+
+    /**
+     * After sorting by last name and then first name and then printing
+     */
     public void printByName() {
         if(isEmpty()){
             System.out.println("Member database is empty!");
@@ -145,7 +195,7 @@ public class MemberDatabase {
         for(int i = 0; i < size; i++){
             Member k = mlist[i];
             int j = i - 1;
-            while(j >= 0 && (mlist[j]!=null && mlist[i] != null) && (mlist[j].getLname().compareTo(k.getLname())) > 0){
+            while(j >= 0 && (mlist[j] != null && mlist[i] != null) && (mlist[j].getLname().compareTo(k.getLname())) > 0){
                 mlist[j + 1] = mlist[j];
                 j = j - 1;
             }
@@ -155,6 +205,10 @@ public class MemberDatabase {
         print();
     }
 
+    /**
+     * The main class to check if the methods are working properly
+     * @param args parameters
+     */
     public static void main(String[] args) {
         Date date1 = new Date("01/02/2026");
         Date date2 = new Date("01/02/2022");
@@ -186,10 +240,10 @@ public class MemberDatabase {
         md.remove(member3);
 
         md.print();
-        //md.printByName();
-        //System.out.println(md.find(member1));
-        //md.printByExpirationDate();
-        //md.printByCounty();
+        md.printByName();
+        System.out.println(md.find(member1));
+        md.printByExpirationDate();
+        md.printByCounty();
 
     }
 }

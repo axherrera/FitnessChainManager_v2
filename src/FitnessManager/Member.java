@@ -1,7 +1,9 @@
 package FitnessManager;
 
-;
-
+/**
+ * A class Member represents to the members of the fitness gym
+ * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ */
 public class Member implements Comparable<Member>{
     private String fname;
     private String lname;
@@ -9,6 +11,14 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
 
+    /**
+     * The constructor of the Member class
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param expire expiration date
+     * @param location location
+     */
     public Member(
             String fname,
             String lname,
@@ -23,47 +33,90 @@ public class Member implements Comparable<Member>{
         this.location = location;
     }
 
-
+    /**
+     * To get the first name
+     * @return first name
+     */
     public String getFname() {
         return this.fname;
     }
 
+    /**
+     * To set the first name
+     * @param fname first name
+     */
     public void setFname(String fname) {
         this.fname = fname;
     }
 
+    /**
+     * To get the last name
+     * @return last name
+     */
     public String getLname() {
         return this.lname;
     }
 
+    /**
+     * To set the last name
+     * @param lname last name
+     */
     public void setLname(String lname) {
         this.lname = lname;
     }
 
+    /**
+     * To get the date of birth
+     * @return date of birth
+     */
     public Date getDob() {
         return this.dob;
     }
 
+    /**
+     * To set the date of birth
+     * @param dob
+     */
     public void setDob(Date dob) {
         this.dob = dob;
     }
 
+    /**
+     * To get the expiration date
+     * @return expiration date
+     */
     public Date getExpire() {
         return this.expire;
     }
 
+    /**
+     * To set the expiration date
+     * @param expire expiration
+     */
     public void setExpire(Date expire) {
         this.expire = expire;
     }
 
+    /**
+     * To get the location
+     * @return location
+     */
     public Location getLocation() {
         return this.location;
     }
 
+    /**
+     * To set the location
+     * @param location location
+     */
     public void setLocation(Location location) {
         this.location = location;
     }
 
+    /**
+     * It overrides the toString method
+     * @return first name, last name, date of birth and expiration date
+     */
     @Override
     public String toString() {
         return (
@@ -75,6 +128,11 @@ public class Member implements Comparable<Member>{
         );
     }
 
+    /**
+     * It overrides the equals method
+     * @param obj obejct
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if(this == obj)
@@ -86,6 +144,11 @@ public class Member implements Comparable<Member>{
         return (fname.toLowerCase().equals(mem.fname.toLowerCase()) && lname.toLowerCase().equals(mem.lname.toLowerCase()) && dob.equals(mem.dob));
     }
 
+    /**
+     * It overrides the compareTo method
+     * @param o the object to be compared.
+     * @return first name and last name
+     */
     @Override
     public int compareTo(Member o) {
         int comp = this.fname.compareTo(o.fname);
@@ -96,6 +159,10 @@ public class Member implements Comparable<Member>{
         }
     }
 
+    /**
+     * It is the main class to check for the methods
+     * @param args parameters
+     */
     public static void main(String[] args) {
 
         Date date1 = new Date("01/02/2026");
@@ -114,10 +181,11 @@ public class Member implements Comparable<Member>{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("n", "k ", date3, date2, location5);
-//        System.out.println(member1);
-//        System.out.println(member4.toString());
-//        System.out.println(date1.compareTo(date2));
-//        System.out.println(member1.compareTo(member2));
+
+        System.out.println(member1);
+        System.out.println(member4.toString());
+        System.out.println(date1.compareTo(date2));
+        System.out.println(member1.compareTo(member2));
 
         MemberDatabase md = new MemberDatabase();
         md.add(member1);
@@ -127,10 +195,9 @@ public class Member implements Comparable<Member>{
         md.add(member5);
         md.add(member6);
 
-//        md.print();
-//        md.printByName();
+        md.printByName();
         md.printByCounty();
-//        md.printByExpirationDate();
+        md.printByExpirationDate();
     }
 }
 
