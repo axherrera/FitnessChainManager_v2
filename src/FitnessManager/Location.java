@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * An enum Location is created
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public enum Location {
     BRIDGEWATER ("Bridgewater", "08807", "Somerset County", "3"),

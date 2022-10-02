@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * a fitnessclass
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class FitnessClass {
     private MemberDatabase checkedIn = new MemberDatabase();

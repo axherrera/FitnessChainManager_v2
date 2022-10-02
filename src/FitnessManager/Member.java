@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * A class Member represents to the members of the fitness gym
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class Member implements Comparable<Member>{
     private String fname;

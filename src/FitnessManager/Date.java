@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * created a date class, it compares the Comparable interface
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class Date implements Comparable<Date>{
     public static final int MAX_YEAR = 9999;

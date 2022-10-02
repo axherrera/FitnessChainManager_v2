@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * Created a MemberDatabase class
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class MemberDatabase {
     private Member [] mlist;

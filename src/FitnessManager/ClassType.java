@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * created enum classType
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public enum ClassType {
     PILATES("Pilates", "Jennifer", "morning", "0"),

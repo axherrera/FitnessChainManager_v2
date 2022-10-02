@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * An enum Time created
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public enum Time {
     MORNING("09:30"),

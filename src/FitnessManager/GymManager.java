@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 /**
  * Created a GymManager class represents the fitness manager
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class GymManager {
     MemberDatabase database;

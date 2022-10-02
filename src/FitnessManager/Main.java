@@ -2,7 +2,7 @@ package FitnessManager;
 
 /**
  * This is the main class to check the results
- * @author ALEJANDRO HERRERA-PINEDA, Huruy Belay
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class Main {
     public static void main(String[] args) {
