@@ -1,4 +1,4 @@
-package FitnessManager;
+package fitnesschainmanager;
 
 /**
  * A class Member represents to the members of the fitness gym
