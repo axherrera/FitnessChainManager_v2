@@ -180,7 +180,7 @@ public class Member implements Comparable<Member>{
         Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
-        Member member6 = new Member("n", "k ", date3, date2, location5);
+        Member member6 = new Member("nani", "kibret", date3, date2, location5);
 
         System.out.println(member1);
         System.out.println(member4.toString());
