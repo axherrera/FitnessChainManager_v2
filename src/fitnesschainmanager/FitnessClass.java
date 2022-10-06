@@ -5,7 +5,7 @@ package fitnesschainmanager;
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class FitnessClass {
-    private MemberDatabase checkedIn = new MemberDatabase();
+    protected MemberDatabase checkedIn = new MemberDatabase();
     private ClassType classType;
 
     /**
@@ -30,9 +30,9 @@ public class FitnessClass {
      * Prints out string to console detailing which member got added to which class
      * @param member member of the gym fitness
      */
-    public void checkIn(Member member){
+    public String checkIn(Member member){
         checkedIn.add(member);
-        System.out.printf("%s %s checked into %s\n", member.getFname(), member.getLname(), classType.getName());
+        return String.format("%s %s checked into %s", member.getFname(), member.getLname(), classType.getName());
     }
 
     /**
@@ -41,12 +41,11 @@ public class FitnessClass {
      * Otherwise prints notification that member dropped the class
      * @param member member of the fitness chain
      */
-    public void dropClass(Member member){
+    public String dropClass(Member member){
         if(!checkedIn.remove(member)){
-            System.out.printf("%s %s is not a participant in %s\n", member.getFname(), member.getLname(), classType.getName());
-            return;
+            return String.format("%s %s is not a participant in %s", member.getFname(), member.getLname(), classType.getName());
         }
-        System.out.printf("%s %s dropped %s\n", member.getFname(), member.getLname(), classType.getName());
+        return String.format("%s %s dropped %s\n", member.getFname(), member.getLname(), classType.getName());
     }
 
     /**
@@ -64,10 +63,6 @@ public class FitnessClass {
      * If class is empty, does not attempt to print out the participant list
      */
     public void classInfo() {
-        System.out.println(classType.toString());
-        if(checkedIn.isEmpty())
-            return;
-        System.out.println("   ** participants **");
         checkedIn.printDatabase();
     }
 }

@@ -177,6 +177,10 @@ public class GymManager {
     private void displayClassSchedule(){
         System.out.println("\n-Fitness Classes-");
         for(FitnessClass fitnessClass:classes){
+            System.out.println(fitnessClass.toString());
+            if(fitnessClass.checkedIn.isEmpty())
+                continue;
+            System.out.println("   ** participants **");
             fitnessClass.classInfo();
         }
         System.out.println();
@@ -205,7 +209,7 @@ public class GymManager {
             return;
 
         if(op == Operation.DROP){
-            classes[classtype.getIndex()].dropClass(new Member(fname, lname, bday, NA, Location.NA));
+            System.out.println(classes[classtype.getIndex()].dropClass(new Member(fname, lname, bday, NA, Location.NA)));
             return;
         }
 
@@ -219,7 +223,7 @@ public class GymManager {
         if(!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
             return;
 
-        classes[classtype.getIndex()].checkIn(tempMem);
+        System.out.println(classes[classtype.getIndex()].checkIn(tempMem));
     }
 
     /**
