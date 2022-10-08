@@ -1,6 +1,6 @@
 package fitnesschainmanager;
 
-public class Family extends Standard{
+public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
     static final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
@@ -20,6 +20,6 @@ public class Family extends Standard{
 
     @Override
     public double MemberShipFee(){
-        return ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 4;
+        return MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 4;
     }
 }

@@ -10,7 +10,8 @@ public class Member implements Comparable<Member>{
     private Date dob;
     private Date expire;
     private Location location;
-
+    protected final double MEMBER_ONE_TIME_FEE = 29.99;
+    private final double    MEMBER_SCHEDULE_PER_MONTH = 39.99;
     /**
      * The constructor of the Member class
      * @param fname first name
@@ -157,6 +158,9 @@ public class Member implements Comparable<Member>{
         } else{
             return comp;
         }
+    }
+    public double MemberShipFee(){
+        return MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 4;
     }
 
 

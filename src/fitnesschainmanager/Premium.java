@@ -17,6 +17,6 @@ public class Premium extends Family{
 
     @Override
     public double MemberShipFee(){
-        return FAMILY_SCHEDULE_PER_MONTH * 11;
+        return FAMILY_SCHEDULE_PER_MONTH * 12 - FAMILY_SCHEDULE_PER_MONTH;
     }
 }
