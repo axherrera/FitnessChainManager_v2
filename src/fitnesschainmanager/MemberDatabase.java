@@ -129,6 +129,14 @@ public class MemberDatabase {
         System.out.println("-end of list-\n");
     }
 
+    public void printMemberShipFee() {
+        for(int i = 0; i < size; i++){
+            if(this.mlist[i] != null)
+                System.out.println(mlist[i]);
+        }
+        System.out.println("-end of list-\n");
+    }
+
     /**
      * Wrapper method for print(). Will print the database with formatting.
      * */

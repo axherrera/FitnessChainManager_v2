@@ -14,6 +14,7 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
     protected final double MEMBER_ONE_TIME_FEE = 29.99;
+
     private final double    MEMBER_SCHEDULE_PER_MONTH = 39.99;
 
     public Member(String fname, String lname, Date dob, Location location){
@@ -135,7 +136,7 @@ public class Member implements Comparable<Member>{
                         this.lname +
                         " DOB: " + this.dob.toString() +
                         ", Membership expires: " + this.expire.toString() + ", " +
-                        "Location: " + this.location.toString()
+                        "Location: " + this.location.toString() + ", Membership fee: " + this.MemberShipFee()
         );
     }
 
@@ -169,9 +170,11 @@ public class Member implements Comparable<Member>{
             return comp;
         }
     }
+
+
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 4);
+        return df.format(MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 3);
     }
 
 
@@ -200,7 +203,7 @@ public class Member implements Comparable<Member>{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
-        System.out.println(member6.MemberShipFee());
+//        System.out.println(member6.MemberShipFee());
 
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -214,7 +217,8 @@ public class Member implements Comparable<Member>{
         md.add(member4);
         md.add(member5);
         md.add(member6);
-
+        md.print();
+        md.printMemberShipFee();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();

@@ -5,26 +5,23 @@ import java.text.DecimalFormat;
 public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
-    static final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
+    protected final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
 
-    /**
-     * The constructor of the Member class
-     *
-     * @param fname    first name
-     * @param lname    last name
-     * @param dob      date of birth
-     * @param expire   expiration date
-     * @param location location
-     */
+    public Family(String fname, String lname, Date dob, Location location) {
+        super(fname, lname, dob, location);
+    }
+
     public Family(String fname, String lname, Date dob, Date expire, Location location) {
         super(fname, lname, dob, expire, location);
     }
 
+
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 4);
+        return df.format(MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 3);
     }
+
 
     @Override
     public String toString() {
@@ -32,7 +29,8 @@ public class Family extends Member{
                 this.getFname() + ", " +
                         this.getLname() +
                         " DOB: " + this.getDob().toString() + ", " +
-                        "Location: " + this.getLocation().toString()
+                        "Location: " + this.getLocation().toString() +
+                        ", Membership fee: " + this.MemberShipFee()
         );
     }
 
@@ -46,31 +44,31 @@ public class Family extends Member{
         Location location1 = Location.FRANKLIN;
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
-        Member guest1 = new Member("Kaleb", "Yonas", date1, location1);
-        Member guest2 = new Member("John", "Mat", date2, location5);
+        Family guest1 = new Family("Kaleb", "Yonas", date1, location1);
+        Family guest2 = new Family("John", "Mat", date2, location5);
 //        System.out.println(guest2.getFname());
 
-        Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
-        Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
-        Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
-        Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
-        Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
-        Member member6 = new Member("nani", "kibret", date3, date2, location5);
-        System.out.println(member6.MemberShipFee());
+        Family family1 = new Family("Gibre", "Lukas ", date1, date2, location1);
+        Family family2 = new Family("Tomas", "Mike ", date1, date2, location2);
+        Family family3 = new Family("Micheal", "Tomas ", date2, date1, location3);
+        Family family4 = new Family("Mike", "Tato ", date1, date2, location4);
+        Family family5 = new Family("Gebre", "Lakas ", date1, date2, location5);
+        Family family6 = new Family("nani", "kibret", date3, date2, location5);
+        System.out.println(family6.MemberShipFee());
 
-//        System.out.println(member1);
-//        System.out.println(member4.toString());
+//        System.out.println(family1);
+//        System.out.println(family4.toString());
 //        System.out.println(date1.compareTo(date2));
-//        System.out.println(member1.compareTo(member2));
+//        System.out.println(family1.compareTo(family2));
 
         MemberDatabase md = new MemberDatabase();
-        md.add(member1);
-        md.add(member2);
-        md.add(member3);
-        md.add(member4);
-        md.add(member5);
-        md.add(member6);
-
+        md.add(family1);
+        md.add(family2);
+        md.add(family3);
+        md.add(family4);
+        md.add(family5);
+        md.add(family6);
+md.print();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();
