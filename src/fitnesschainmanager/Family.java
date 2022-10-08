@@ -1,5 +1,7 @@
 package fitnesschainmanager;
 
+import java.text.DecimalFormat;
+
 public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
@@ -19,8 +21,9 @@ public class Family extends Member{
     }
 
     @Override
-    public double MemberShipFee(){
-        return MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 4;
+    public String MemberShipFee(){
+        DecimalFormat df = new DecimalFormat("0.##");
+        return df.format(MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 4);
     }
 
     @Override
@@ -47,17 +50,13 @@ public class Family extends Member{
         Member guest2 = new Member("John", "Mat", date2, location5);
 //        System.out.println(guest2.getFname());
 
-
-
-
-//
-//
         Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
         Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
+        System.out.println(member6.MemberShipFee());
 
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -73,7 +72,7 @@ public class Family extends Member{
         md.add(member6);
 
 //        md.printByName();
-        md.printByCounty();
+//        md.printByCounty();
 //        md.printByExpirationDate();
     }
 }

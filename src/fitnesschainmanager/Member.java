@@ -1,6 +1,8 @@
 package fitnesschainmanager;
 
 
+import java.text.DecimalFormat;
+
 /**
  * A class Member represents to the members of the fitness gym
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
@@ -167,8 +169,9 @@ public class Member implements Comparable<Member>{
             return comp;
         }
     }
-    public double MemberShipFee(){
-        return MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 4;
+    public String MemberShipFee(){
+        DecimalFormat df = new DecimalFormat("0.##");
+        return df.format(MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 4);
     }
 
 
@@ -197,8 +200,9 @@ public class Member implements Comparable<Member>{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
+        System.out.println(member6.MemberShipFee());
 
-        System.out.println(member1);
+//        System.out.println(member1);
 //        System.out.println(member4.toString());
 //        System.out.println(date1.compareTo(date2));
 //        System.out.println(member1.compareTo(member2));

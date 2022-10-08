@@ -1,5 +1,7 @@
 package fitnesschainmanager;
 
+import java.text.DecimalFormat;
+
 public class Premium extends Family{
 //    public final double PREMIU_SCHEDULE_PER_MONTH = 59.99;
     /**
@@ -16,8 +18,9 @@ public class Premium extends Family{
     }
 
     @Override
-    public double MemberShipFee(){
-        return FAMILY_SCHEDULE_PER_MONTH * 12 - FAMILY_SCHEDULE_PER_MONTH;
+    public String MemberShipFee(){
+        DecimalFormat df = new DecimalFormat("0.##");
+        return df.format(FAMILY_SCHEDULE_PER_MONTH * 12 - FAMILY_SCHEDULE_PER_MONTH);
     }
 
     public static void main(String[] args) {
@@ -34,7 +37,7 @@ public class Premium extends Family{
         Member guest1 = new Member("Kaleb", "Yonas", date1, location1);
         Member guest2 = new Member("John", "Mat", date2, location5);
         Member guest3 = new Member("John", "Mat", date3, location3);
-        System.out.println(guest2.getLocation());
+//        System.out.println(guest2.getLocation());
 
         Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
@@ -42,6 +45,7 @@ public class Premium extends Family{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
+        System.out.println(member6.MemberShipFee());
 
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -56,7 +60,7 @@ public class Premium extends Family{
         md.add(member5);
         md.add(member6);
 
-        md.printByName();
+//        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();
     }
