@@ -14,7 +14,7 @@ public class Premium extends Family{
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(FAMILY_SCHEDULE_PER_MONTH * 12 - FAMILY_SCHEDULE_PER_MONTH);
+        return df.format(this.getFAMILY_SCHEDULE_PER_MONTH() * 12 - this.getFAMILY_SCHEDULE_PER_MONTH());
     }
 
     public static void main(String[] args) {

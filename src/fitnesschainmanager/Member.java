@@ -13,7 +13,11 @@ public class Member implements Comparable<Member>{
     private Date dob;
     private Date expire;
     private Location location;
-    protected final double MEMBER_ONE_TIME_FEE = 29.99;
+    private final double MEMBER_ONE_TIME_FEE = 29.99;
+
+    public double getMEMBER_ONE_TIME_FEE() {
+        return MEMBER_ONE_TIME_FEE;
+    }
 
     private final double    MEMBER_SCHEDULE_PER_MONTH = 39.99;
 
@@ -203,7 +207,7 @@ public class Member implements Comparable<Member>{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
-//        System.out.println(member6.MemberShipFee());
+        System.out.println(member6.MemberShipFee());
 
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -217,8 +221,8 @@ public class Member implements Comparable<Member>{
         md.add(member4);
         md.add(member5);
         md.add(member6);
-        md.print();
-        md.printMemberShipFee();
+//        md.print();
+//        md.printMemberShipFee();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();

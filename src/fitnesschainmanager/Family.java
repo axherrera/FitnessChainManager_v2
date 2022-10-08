@@ -5,7 +5,11 @@ import java.text.DecimalFormat;
 public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
-    protected final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
+    private final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
+
+    public double getFAMILY_SCHEDULE_PER_MONTH() {
+        return FAMILY_SCHEDULE_PER_MONTH;
+    }
 
     public Family(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
@@ -19,20 +23,20 @@ public class Family extends Member{
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(MEMBER_ONE_TIME_FEE + FAMILY_SCHEDULE_PER_MONTH * 3);
+        return df.format(this.getMEMBER_ONE_TIME_FEE() + FAMILY_SCHEDULE_PER_MONTH * 3);
     }
 
 
-    @Override
-    public String toString() {
-        return (
-                this.getFname() + ", " +
-                        this.getLname() +
-                        " DOB: " + this.getDob().toString() + ", " +
-                        "Location: " + this.getLocation().toString() +
-                        ", Membership fee: " + this.MemberShipFee()
-        );
-    }
+//    @Override
+//    public String toString() {
+//        return (
+//                this.getFname() + ", " +
+//                        this.getLname() +
+//                        " DOB: " + this.getDob().toString() + ", " +
+//                        "Location: " + this.getLocation().toString() +
+//                        ", Membership fee: " + this.MemberShipFee()
+//        );
+//    }
 
     public static void main(String[] args) {
         Date date1 = new Date("01/02/2026");
@@ -56,7 +60,7 @@ public class Family extends Member{
         Family family6 = new Family("nani", "kibret", date3, date2, location5);
         System.out.println(family6.MemberShipFee());
 
-//        System.out.println(family1);
+        System.out.println(family1);
 //        System.out.println(family4.toString());
 //        System.out.println(date1.compareTo(date2));
 //        System.out.println(family1.compareTo(family2));
@@ -68,7 +72,7 @@ public class Family extends Member{
         md.add(family4);
         md.add(family5);
         md.add(family6);
-md.print();
+//        md.print();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();
