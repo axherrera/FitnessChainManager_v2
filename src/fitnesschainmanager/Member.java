@@ -1,5 +1,6 @@
 package fitnesschainmanager;
 
+
 /**
  * A class Member represents to the members of the fitness gym
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
@@ -12,6 +13,13 @@ public class Member implements Comparable<Member>{
     private Location location;
     protected final double MEMBER_ONE_TIME_FEE = 29.99;
     private final double    MEMBER_SCHEDULE_PER_MONTH = 39.99;
+
+    public Member(String fname, String lname, Date dob, Location location){
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+        this.location = location;
+    }
     /**
      * The constructor of the Member class
      * @param fname first name
@@ -170,15 +178,18 @@ public class Member implements Comparable<Member>{
      */
     public static void main(String[] args) {
 
+
         Date date1 = new Date("01/02/2026");
         Date date2 = new Date("01/02/2022");
         Date date3 = new Date("01/02/2023");
+
 
         Location location3 = Location.BRIDGEWATER;
         Location location2 = Location.EDISON;
         Location location1 = Location.FRANKLIN;
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
+
 
         Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
@@ -188,9 +199,9 @@ public class Member implements Comparable<Member>{
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
 
         System.out.println(member1);
-        System.out.println(member4.toString());
-        System.out.println(date1.compareTo(date2));
-        System.out.println(member1.compareTo(member2));
+//        System.out.println(member4.toString());
+//        System.out.println(date1.compareTo(date2));
+//        System.out.println(member1.compareTo(member2));
 
         MemberDatabase md = new MemberDatabase();
         md.add(member1);
@@ -200,9 +211,9 @@ public class Member implements Comparable<Member>{
         md.add(member5);
         md.add(member6);
 
-        md.printByName();
-        md.printByCounty();
-        md.printByExpirationDate();
+//        md.printByName();
+//        md.printByCounty();
+//        md.printByExpirationDate();
     }
 }
 
