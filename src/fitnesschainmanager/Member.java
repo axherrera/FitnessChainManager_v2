@@ -8,24 +8,20 @@ import java.text.DecimalFormat;
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public class Member implements Comparable<Member>{
-    private String fname;
-    private String lname;
-    private Date dob;
-    private Date expire;
-    private Location location;
-    private final double MEMBER_ONE_TIME_FEE = 29.99;
-
-    public double getMEMBER_ONE_TIME_FEE() {
-        return MEMBER_ONE_TIME_FEE;
-    }
-
-    private final double    MEMBER_SCHEDULE_PER_MONTH = 39.99;
+    protected String fname;
+    protected String lname;
+    protected Date dob;
+    protected Date expire;
+    protected Location location;
+    protected final double MEMBER_ONE_TIME_FEE = 29.99;
+    private final double MEMBER_MONTHLY_FEE = 39.99;
 
     public Member(String fname, String lname, Date dob, Location location){
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
         this.location = location;
+        this.expire = Date.genExpDate();
     }
     /**
      * The constructor of the Member class
@@ -178,7 +174,7 @@ public class Member implements Comparable<Member>{
 
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(MEMBER_ONE_TIME_FEE + MEMBER_SCHEDULE_PER_MONTH * 3);
+        return df.format(MEMBER_ONE_TIME_FEE + MEMBER_MONTHLY_FEE * 3);
     }
 
 

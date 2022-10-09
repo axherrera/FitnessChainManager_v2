@@ -140,6 +140,21 @@ public class Date implements Comparable<Date> {
         return (this.month == d.month) && (this.day == d.day) && (this.year == d.year);
     }
 
+    /**
+     *
+     * @return returns an expiration date that is 3 months after the current date
+     */
+    public static Date genExpDate(){
+        Calendar cd = Calendar.getInstance();
+        int day = cd.get(Calendar.DATE);
+        int month = ((cd.get(Calendar.MONTH)+3)%11);
+        int year = month<cd.get(Calendar.MONTH)?
+                cd.get(Calendar.YEAR)+1:
+                cd.get(Calendar.YEAR);
+        return new Date(String.format("%d/%d/%d", month, day, year));
+    }
+
+
     public static void main(String[] args) {
 
             Date date = new Date("01/02/1990");
@@ -152,5 +167,7 @@ public class Date implements Comparable<Date> {
             System.out.println(date.compareTo(date1));
             System.out.println(date.isLeapYear());
             System.out.println(date1.ofAge());
+
+            System.out.println(genExpDate());
     }
 }

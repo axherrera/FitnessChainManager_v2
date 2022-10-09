@@ -5,10 +5,10 @@ import java.text.DecimalFormat;
 public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
-    private final double FAMILY_SCHEDULE_PER_MONTH = 59.99;
+    protected final double FAMILY_FEE_PER_MONTH = 59.99;
 
-    public double getFAMILY_SCHEDULE_PER_MONTH() {
-        return FAMILY_SCHEDULE_PER_MONTH;
+    public double getFAMILY_FEE_PER_MONTH() {
+        return FAMILY_FEE_PER_MONTH;
     }
 
     public Family(String fname, String lname, Date dob, Location location) {
@@ -23,7 +23,7 @@ public class Family extends Member{
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
-        return df.format(this.getMEMBER_ONE_TIME_FEE() + FAMILY_SCHEDULE_PER_MONTH * 3);
+        return df.format(this.MEMBER_ONE_TIME_FEE + FAMILY_FEE_PER_MONTH * 3);
     }
 
 
