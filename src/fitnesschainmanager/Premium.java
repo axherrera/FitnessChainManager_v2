@@ -33,12 +33,12 @@ public class Premium extends Family{
         Premium guest3 = new Premium("John", "Mat", date3, location3);
 //        System.out.println(guest2.getLocation());
 
-        Premium premium1 = new Premium("Gibre", "Lukas ", date1, date2, location1);
-        Premium premium2 = new Premium("Tomas", "Mike ", date1, date2, location2);
-        Premium premium3 = new Premium("Micheal", "Tomas ", date2, date1, location3);
-        Premium premium4 = new Premium("Mike", "Tato ", date1, date2, location4);
-        Premium premium5 = new Premium("Gebre", "Lakas ", date1, date2, location5);
-        Premium premium6 = new Premium("nani", "kibret", date3, date2, location5);
+        Family premium1 = new Premium("Gibre", "Lukas ", date1, date2, location1);
+        Family premium2 = new Premium("Tomas", "Mike ", date1, date2, location2);
+        Family premium3 = new Premium("Micheal", "Tomas ", date2, date1, location3);
+        Family premium4 = new Premium("Mike", "Tato ", date1, date2, location4);
+        Family premium5 = new Premium("Gebre", "Lakas ", date1, date2, location5);
+        Family premium6 = new Premium("nani", "kibret", date3, date2, location5);
         System.out.println(premium6.MemberShipFee());
 //
 //        System.out.println(premium1);

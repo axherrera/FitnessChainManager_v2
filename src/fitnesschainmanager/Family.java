@@ -52,15 +52,15 @@ public class Family extends Member{
         Family guest2 = new Family("John", "Mat", date2, location5);
 //        System.out.println(guest2.getFname());
 
-        Family family1 = new Family("Gibre", "Lukas ", date1, date2, location1);
-        Family family2 = new Family("Tomas", "Mike ", date1, date2, location2);
-        Family family3 = new Family("Micheal", "Tomas ", date2, date1, location3);
-        Family family4 = new Family("Mike", "Tato ", date1, date2, location4);
-        Family family5 = new Family("Gebre", "Lakas ", date1, date2, location5);
-        Family family6 = new Family("nani", "kibret", date3, date2, location5);
+        Member family1 = new Family("Gibre", "Lukas ", date1, date2, location1);
+        Member family2 = new Family("Tomas", "Mike ", date1, date2, location2);
+        Member family3 = new Family("Micheal", "Tomas ", date2, date1, location3);
+        Member family4 = new Family("Mike", "Tato ", date1, date2, location4);
+        Member family5 = new Family("Gebre", "Lakas ", date1, date2, location5);
+        Member family6 = new Family("nani", "kibret", date3, date2, location5);
         System.out.println(family6.MemberShipFee());
 
-        System.out.println(family1);
+//        System.out.println(family1);
 //        System.out.println(family4.toString());
 //        System.out.println(date1.compareTo(date2));
 //        System.out.println(family1.compareTo(family2));
@@ -72,7 +72,7 @@ public class Family extends Member{
         md.add(family4);
         md.add(family5);
         md.add(family6);
-//        md.print();
+        md.print();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();
