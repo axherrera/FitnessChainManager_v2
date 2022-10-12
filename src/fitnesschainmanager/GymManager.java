@@ -1,7 +1,9 @@
 package fitnesschainmanager;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.io.File;
 
 /**
  * Created a GymManager class represents the fitness manager
@@ -12,6 +14,10 @@ public class GymManager {
     FitnessClass classes[];
     private final int NUM_CLASSES = 3;
     private final Date NA = new Date("00/00/0000");
+
+    private final String MEMBER_LIST = "memberList.txt";
+
+    private final String CLASS_SCHEDULE = "classSchedule.txt";
 
     /**
      * Creates new instance of GymManager class
@@ -26,11 +32,10 @@ public class GymManager {
 
     /**
      * It validates input data before creating member object
-     * Does date validation on date of birth/expiration date and location validation
+     * Does date validation on date of birth and location
      * @param fname first name
      * @param lname last name
      * @param birth birthdate
-     * @param expire expire date
      * @param location location
      * @return Will return member if input is valid. Otherwise, it will return null
      */
@@ -38,22 +43,29 @@ public class GymManager {
             String fname,
             String lname,
             String birth,
-            String expire,
-            String location
+            String location,
+            Operation memType
     ){
         Date bday = new Date(birth);
-        Date eDate = new Date(expire);
         Location loc = Location.idLocation(location);
 
         if(!dateValidation(fname, lname, bday, Operation.DOB))
-            return null;
-        if(!dateValidation(fname, lname, eDate, Operation.AEXP))
             return null;
         if(loc == Location.NA){
             System.out.printf("%s: invalid location!\n", location);
             return null;
         }
-        Member tempMem = new Member(fname, lname, bday, eDate, loc);
+        Member tempMem;
+        switch (memType){
+            case F:
+                tempMem = new Family(fname, lname, bday, loc);
+                break;
+            case P:
+                tempMem = new Premium(fname, lname, bday, loc);
+                break;
+            default:
+                tempMem = new Member(fname, lname, bday, loc);
+        }
         if(database.getMember(tempMem)!=null){
             System.out.printf("%s %s is already in the database.\n", tempMem.getFname(), tempMem.getLname());
             return null;
@@ -93,13 +105,6 @@ public class GymManager {
             }
             else if(!date.isFuture()){
                 System.out.printf("%s %s %s membership expired\n", fname, lname, date.toString());
-                return false;
-            }
-            else return true;
-        }
-        else if(op == Operation.AEXP){
-            if(!date.isValid()){
-                System.out.printf("Expiration date %s: invalid calendar date!\n", date.toString());
                 return false;
             }
             else return true;
@@ -145,9 +150,9 @@ public class GymManager {
      * If adding is successful, prints out string notifying addition.
      * @param sc scanner object that will read user inputs
      */
-    private void addMember(Scanner sc){
+    private void addMember(Scanner sc, Operation memType){
         StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
-        Member tempMem = validateMemberData(tk.nextToken(), tk.nextToken(), tk.nextToken(), tk.nextToken(), tk.nextToken());
+        Member tempMem = validateMemberData(tk.nextToken(), tk.nextToken(), tk.nextToken(), tk.nextToken(), memType);
         if(tempMem == null)
             return;
         database.add(tempMem);
@@ -227,14 +232,47 @@ public class GymManager {
     }
 
     /**
+     * Imports historical member information from a memberList.txt file
+     * This method assumes that all historical members hav valid member information, therefore
+     * forgoing new member information validation.
+     */
+    private void importMembers(){
+        File file = new File(MEMBER_LIST);
+        try{
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
+                database.add(
+                        new Member(
+                                tk.nextToken(), tk.nextToken(), new Date(tk.nextToken()), new Date(tk.nextToken()), Location.idLocation(tk.nextToken())
+                        )
+                );
+            }
+        }
+        catch(FileNotFoundException e) {
+            System.out.printf("%S not found in project directory", MEMBER_LIST);
+        }
+    }
+
+    private void loadSchedule(){
+        File file = new File(CLASS_SCHEDULE);
+
+    }
+    /**
      * Checks operation and calls corresponding method
      * @param op operation to be used
      * @param sc scanner object to be passed into corresponding method
      */
-    private void checkOP(String op, Scanner sc){
+    private void checkOP(String op, Scanner sc) {
         switch (op) {
             case "A":
-                addMember(sc);
+                addMember(sc, Operation.S);
+                break;
+            case "AF":
+                addMember(sc, Operation.F);
+                break;
+            case "AP":
+                addMember(sc, Operation.P);
                 break;
             case "R":
                 removeMember(sc);
@@ -259,6 +297,12 @@ public class GymManager {
                 break;
             case "D":
                 addOrDropClass(sc, Operation.DROP);
+                break;
+            case "LS":
+                loadSchedule();
+                break;
+            case "LM":
+                importMembers();
                 break;
             default:
                 System.out.println(op + " is an invalid command!\n");

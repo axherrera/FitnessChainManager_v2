@@ -7,7 +7,9 @@ package fitnesschainmanager;
 public enum Operation {
     DOB,
     EXP,
-    AEXP,
     CHK,
-    DROP;
+    DROP,
+    S,
+    F,
+    P;
 }
