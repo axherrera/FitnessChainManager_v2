@@ -129,6 +129,16 @@ public class Member implements Comparable<Member>{
      * It overrides the toString method
      * @return first name, last name, date of birth and expiration date
      */
+
+    public String printMembership() {
+        return (
+                this.fname + ", " +
+                        this.lname +
+                        " DOB: " + this.dob.toString() +
+                        ", Membership expires: " + this.expire.toString() + ", " +
+                        "Location: " + this.location.toString() + ", Membership fee: " + this.MemberShipFee()
+        );
+    }
     @Override
     public String toString() {
         return (
@@ -136,7 +146,7 @@ public class Member implements Comparable<Member>{
                         this.lname +
                         " DOB: " + this.dob.toString() +
                         ", Membership expires: " + this.expire.toString() + ", " +
-                        "Location: " + this.location.toString() + ", Membership fee: " + this.MemberShipFee()
+                        "Location: " + this.location.toString()
         );
     }
 
@@ -203,7 +213,7 @@ public class Member implements Comparable<Member>{
         Member member4 = new Member("Mike", "Tato ", date1, date2, location4);
         Member member5 = new Member("Gebre", "Lakas ", date1, date2, location5);
         Member member6 = new Member("nani", "kibret", date3, date2, location5);
-        System.out.println(member6.MemberShipFee());
+//        System.out.println(member6.MemberShipFee());
 
 //        System.out.println(member1);
 //        System.out.println(member4.toString());
@@ -218,7 +228,7 @@ public class Member implements Comparable<Member>{
         md.add(member5);
         md.add(member6);
 //        md.print();
-//        md.printMemberShipFee();
+        md.printMemberShipFee();
 //        md.printByName();
 //        md.printByCounty();
 //        md.printByExpirationDate();

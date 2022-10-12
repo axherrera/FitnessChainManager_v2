@@ -132,7 +132,7 @@ public class MemberDatabase {
     public void printMemberShipFee() {
         for(int i = 0; i < size; i++){
             if(this.mlist[i] != null)
-                System.out.println(mlist[i]);
+                System.out.println(mlist[i].printMembership());
         }
         System.out.println("-end of list-\n");
     }
