@@ -26,18 +26,6 @@ public class Family extends Member{
         return df.format(this.MEMBER_ONE_TIME_FEE + FAMILY_FEE_PER_MONTH * 3);
     }
 
-
-//    @Override
-//    public String toString() {
-//        return (
-//                this.getFname() + ", " +
-//                        this.getLname() +
-//                        " DOB: " + this.getDob().toString() + ", " +
-//                        "Location: " + this.getLocation().toString() +
-//                        ", Membership fee: " + this.MemberShipFee()
-//        );
-//    }
-
     public static void main(String[] args) {
         Date date1 = new Date("01/02/2026");
         Date date2 = new Date("01/02/2022");
@@ -66,12 +54,14 @@ public class Family extends Member{
 //        System.out.println(family1.compareTo(family2));
 
         MemberDatabase md = new MemberDatabase();
+
         md.add(family1);
         md.add(family2);
         md.add(family3);
         md.add(family4);
         md.add(family5);
         md.add(family6);
+      
         md.print();
 //        md.printByName();
 //        md.printByCounty();

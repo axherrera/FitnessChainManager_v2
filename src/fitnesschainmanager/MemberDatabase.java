@@ -21,12 +21,12 @@ public class MemberDatabase {
      * Used to grow the size of the array by increments of 4 when full
      */
     private void grow() {
-        Member[] temp = new Member[size+4];
-        for(int i = 0; i<size; i++){
+        Member[] temp = new Member[size + 4];
+        for(int i = 0; i < size; i++){
             temp[i] = mlist[i];
         }
         mlist = temp;
-        size+=4;
+        size += 4;
     }
 
     /**
