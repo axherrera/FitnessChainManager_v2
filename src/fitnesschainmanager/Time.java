@@ -6,7 +6,9 @@ package fitnesschainmanager;
  */
 public enum Time {
     MORNING("09:30"),
-    AFTERNOON("14:00");
+    AFTERNOON("14:00"),
+    EVENING("18:30"),
+    NA("");
 
     private final String time;
 
@@ -29,9 +31,15 @@ public enum Time {
      * @return returns the Time object corresponding to the argument
      */
     public static Time getTime(String time){
-        if(time.equals("afternoon"))
-            return Time.AFTERNOON;
-        else
-            return Time.MORNING;
+        switch(time.toLowerCase()){
+            case "morning":
+                return Time.MORNING;
+            case "afternoon":
+                return Time.AFTERNOON;
+            case "evening":
+                return Time.EVENING;
+            default:
+                return Time.NA;
+        }
     }
 }

@@ -5,10 +5,12 @@ import java.text.DecimalFormat;
 public class Premium extends Family{
     public Premium(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
+        this.guestPasses = 3;
     }
 
     public Premium(String fname, String lname, Date dob, Date expire, Location location) {
         super(fname, lname, dob, expire, location);
+        this.guestPasses = 3;
     }
 
     @Override

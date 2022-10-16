@@ -11,5 +11,7 @@ public enum Operation {
     DROP,
     S,
     F,
-    P;
+    P,
+    G,
+    M;
 }
