@@ -5,15 +5,16 @@ package fitnesschainmanager;
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
  */
 public enum Location {
-    BRIDGEWATER ("Bridgewater", "08807", "Somerset County"),
-    EDISON("Edison", "08837", "Middlesex County"),
-    FRANKLIN("Franklin", "08873", "Somerset County"),
-    PISCATAWAY("Piscataway", "08854", "Middlesex County"),
-    SOMERVILLE("Somerville", "08876", "Somerset County"),
+    BRIDGEWATER ("Bridgewater", "08807", "Somerset County", "3"),
+    EDISON("Edison", "08837", "Middlesex County", "1"),
+    FRANKLIN("Franklin", "08873", "Somerset County", "4"),
+    PISCATAWAY("Piscataway", "08854", "Middlesex County", "2"),
+    SOMERVILLE("Somerville", "08876", "Somerset County", "5"),
     NA("NA", "NA", "NA", "6");
     private final String township;
     private final String zipcode;
     private final String county;
+    private final int rank;
     /**
      * To get the township
      * @return township
@@ -38,6 +39,14 @@ public enum Location {
     }
 
     /**
+     * To get the rank
+     * @return rank
+     */
+    public int getRank() {
+        return rank;
+    }
+
+    /**
      * The constructor of the enum Location
      * @param township township
      * @param zipcode zipcode
@@ -48,6 +57,7 @@ public enum Location {
         this.township = township;
         this.zipcode = zipcode;
         this.county = county;
+        this.rank = Integer.parseInt(rank);
     }
 
     /**

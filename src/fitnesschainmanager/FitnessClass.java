@@ -1,7 +1,5 @@
 package fitnesschainmanager;
 
-import java.util.Objects;
-
 /**
  * Instance of a fitness class which consists of a class type and database of all checked in members
  * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
@@ -103,17 +101,21 @@ public class FitnessClass {
      * @param m member of the gym fitness
      * @return if member is found return member, return null if no such member exists
      */
-    public Member find(Member m, ,Operation type){
+    public Member find(Member m ,Operation type){
         if(type == Operation.G)
             return this.guests.getMember(m);
         return this.checkedIn.getMember(m);
+    }
+    @Override
+    public String toString(){
+        return classInfo;
     }
 
     /**
      * It prints class information as well as all members attending
      * If class is empty, does not attempt to print out the participant list
      */
-    public void classInfo() {
+    public void classRoster() {
         checkedIn.printDatabase();
     }
 }

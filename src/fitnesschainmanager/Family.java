@@ -29,8 +29,8 @@ public class Family extends Member{
         return df.format(this.MEMBER_ONE_TIME_FEE + FAMILY_FEE_PER_MONTH * 3);
     }
 
-    public int getGuestPasses() {
-        return guestPasses;
+    public boolean hasGuestPasses() {
+        return guestPasses != 0;
     }
 
     public boolean useGuestPass(){

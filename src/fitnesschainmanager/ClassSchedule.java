@@ -38,6 +38,14 @@ public class ClassSchedule {
         return true;
     }
 
+    public boolean isEmpty(){
+        for(int i = 0; i < numClasses; i++){
+            if(classes[i] != null)
+                return false;
+        }
+        return true;
+    }
+
     /**
      * Adds a class to the first empty spot in the class schedule
      * If the schedule is full, grow() is called to expand capacity
