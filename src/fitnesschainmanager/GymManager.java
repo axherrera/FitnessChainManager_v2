@@ -1,9 +1,12 @@
 package fitnesschainmanager;
 
 import java.io.FileNotFoundException;
+import java.nio.file.OpenOption;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.File;
+
+import static fitnesschainmanager.ClassType.idClassType;
 
 /**
  * Created a GymManager class represents the fitness manager
@@ -11,23 +14,19 @@ import java.io.File;
  */
 public class GymManager {
     MemberDatabase database;
-    FitnessClass classes[];
-    private final int NUM_CLASSES = 3;
+    ClassSchedule classSchedule;
     private final Date NA = new Date("00/00/0000");
 
-    private final String MEMBER_LIST = "memberList.txt";
+    private final String MEMBER_LIST = "src/memberList.txt";
 
-    private final String CLASS_SCHEDULE = "classSchedule.txt";
+    private final String CLASS_SCHEDULE = "src/classSchedule.txt";
 
     /**
      * Creates new instance of GymManager class
      */
     public GymManager() {
         this.database = new MemberDatabase();
-        this.classes = new FitnessClass[NUM_CLASSES];
-        classes[0] = new FitnessClass(ClassType.PILATES);
-        classes[1] = new FitnessClass(ClassType.SPINNING);
-        classes[2] = new FitnessClass(ClassType.CARDIO);
+        this.classSchedule = new ClassSchedule();
     }
 
     /**
@@ -113,35 +112,87 @@ public class GymManager {
     }
 
     /**
-     * check that the there is no conflict with other classes, member is not already checked in
+     *
      * @param tempMem member object
-     * @param classType class type
-     * @return boolean that shows whether member can check into class or not
+     * @param tempClass specific class
+     * @param type type of check in: member/guest
+     * @return returns a boolean which tells if there are time conflicts between classes or not
      */
-    private boolean checkInValidate(Member tempMem, ClassType classType) {
-        for(FitnessClass fitnessClass: classes){
-            if(fitnessClass.find(tempMem)==null)
+    private boolean classTimeConflict(Member tempMem, FitnessClass tempClass, Operation type){
+        for(FitnessClass fitnessClass: classSchedule.getClasses()){
+            if(fitnessClass==null || fitnessClass.find(tempMem, type)==null)
                 continue;
-            if(fitnessClass.getClassType()!=classType && fitnessClass.getClassType().getTime()==classType.getTime()){
+            if(fitnessClass!=tempClass && fitnessClass.getTime()==tempClass.getTime()){
                 System.out.printf(
                         "%s time conflict -- %s %s has already checked in %s.\n",
-                        classType.getName(),
+                        tempClass.getClassType().getName(),
                         tempMem.getFname(),
                         tempMem.getLname(),
                         fitnessClass.getClassType().getName()
                 );
                 return false;
             }
-            else if(fitnessClass.getClassType()==classType){
+            else if(fitnessClass.getClassType()==tempClass.getClassType()){
                 System.out.printf(
                         "%s %s has already checked in %s\n",
                         tempMem.getFname(),
                         tempMem.getLname(),
-                        classType.getName()
+                        tempClass.getClassType().getName()
                 );
                 return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * check that the there is no conflict with other classes, member is not already checked in
+     * @param tempMem member object
+     * @param tempClass specific class
+     * @param type type of check in: member/guest
+     * @return boolean that shows whether member can check into class or not
+     */
+    private boolean checkInValidate(Member tempMem, FitnessClass tempClass, Operation type) {
+        if(tempMem instanceof Family ){
+            if(!((Family) tempMem).hasGuestPasses()){
+                System.out.printf("%s %s ran out of guest passes\n", tempMem.getFname(), tempMem.getLname());
+                return false;
+            }
+
+        }
+        //validate that member can check in
+        if(tempMem.getLocation()!=tempClass.getLocation()){
+            if(!(tempMem instanceof Family)){
+                if(type == Operation.G){
+                    System.out.println("Standard membership - guest check-in is not allowed.\n");
+                }
+                else{
+                    System.out.printf("%s %s checking in %s - standard membership location restriction\n",
+                            tempMem.getFname(),
+                            tempMem.getLname(),
+                            tempClass.getLocation().toString()
+                    );
+                }
+                return false;
+            }
+            else{
+                if(type == Operation.G){
+                    System.out.printf(
+                            "%s %s Guest checking in %s - guest location restriction\n",
+                            tempMem.getFname(),
+                            tempMem.getLname(),
+                            tempClass.getLocation().toString()
+                    );
+                }
+            }
+            return true;
+        }
+        //validate that there are no time conflicts no need to check for guests
+        if(type != Operation.G) {
+            return classTimeConflict(tempMem, tempClass, type);
+        }
+        else
+            ((Family) tempMem).useGuestPass();
         return true;
     }
 
@@ -180,15 +231,64 @@ public class GymManager {
      * It displays the schedule for the gym fitness classes
      */
     private void displayClassSchedule(){
+        if(classSchedule.isEmpty()){
+            System.out.println("Fitness class schedule is empty");
+            return;
+        }
         System.out.println("\n-Fitness Classes-");
-        for(FitnessClass fitnessClass:classes){
+        for(FitnessClass fitnessClass: classSchedule.getClasses()){
+            if(fitnessClass==null)
+                continue;
             System.out.println(fitnessClass.toString());
             if(fitnessClass.checkedIn.isEmpty())
                 continue;
             System.out.println("   ** participants **");
-            fitnessClass.classInfo();
+            fitnessClass.classRoster(Operation.M);
+
+            if(fitnessClass.guests.isEmpty())
+                continue;
+            System.out.println("   ** guests **");
+            fitnessClass.classRoster(Operation.G);
         }
-        System.out.println();
+        System.out.println("-end of class list-");
+    }
+
+    public FitnessClass classValidation(String isClass, String instructor, String location){
+        ClassType classtype = idClassType(isClass);
+        if(classtype == ClassType.NA) {//check if class exists
+            System.out.printf("%s class does not exist\n", isClass);
+            return null;
+        }
+        boolean temp = false;//checks if instructor exists for class
+        for(FitnessClass c : classSchedule.getClasses()){
+            if(c==null)
+                continue;
+            if(c.getInstructor().equalsIgnoreCase(instructor)){
+                temp = true;
+                break;
+            }
+        }
+        if(!temp){
+            System.out.printf("%s - instructor does not exist.\n", instructor);
+            return null;
+        }
+        Location l = Location.idLocation(location);
+        if( l ==Location.NA){//check if location exists
+            System.out.printf("%s - invalid location.\n", location);
+            return null;
+        }
+        for(FitnessClass c : classSchedule.getClasses()){
+            if(c == null)
+                continue;
+            if(c.getInstructor().equalsIgnoreCase(instructor)
+                    && c.getLocation()==l
+                    && c.getClassType()==classtype
+            ){
+                return c;
+            }
+        }
+        System.out.printf("%s by %s does not exist at %s.\n", isClass, instructor, location);
+        return null;
     }
 
     /**
@@ -196,40 +296,41 @@ public class GymManager {
      * @param sc scanner object that will read user inputs
      * @param op operation, either add or drop
      */
-    private void addOrDropClass(Scanner sc, Operation op){
+    private void addOrDropClass(Scanner sc, Operation op, Operation memType) {
         StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
         String isClass = tk.nextToken();
-        ClassType classtype = ClassType.idClassType(isClass);
+        String instructor = tk.nextToken();
+        String location = tk.nextToken();
 
-        if(classtype == ClassType.NA) {
-            System.out.printf("%s class does not exist\n", isClass);
+        FitnessClass fClass = classValidation(isClass, instructor, location);
+        if (fClass == null)
             return;
-        }
 
         String fname = tk.nextToken();
         String lname = tk.nextToken();
         Date bday = new Date(tk.nextToken());
 
-        if(!dateValidation(fname, lname, bday, Operation.DOB))
+        if (!dateValidation(fname, lname, bday, Operation.DOB))
             return;
 
-        if(op == Operation.DROP){
-            System.out.println(classes[classtype.getIndex()].dropClass(new Member(fname, lname, bday, NA, Location.NA)));
-            return;
-        }
-
-        if(database.getMember(new Member(fname, lname, bday, NA, Location.NA)) == null){
+        if (database.getMember(new Member(fname, lname, bday, NA, Location.NA)) == null) {
             System.out.printf("%s %s %s is not in the database.\n", fname, lname, bday);
             return;
         }
         Member tempMem = database.getMember(new Member(fname, lname, bday, NA, Location.NA));
-        if(!checkInValidate(tempMem, classtype))
+
+        if (op == Operation.DROP) {//check if member is in class and respond accordingly
+            System.out.println(classSchedule.getFitnessClass(fClass).dropClass(tempMem, memType));
             return;
-        if(!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
+        }
+        if (!checkInValidate(tempMem, fClass, memType))
+            return;
+        if (!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
             return;
 
-        System.out.println(classes[classtype.getIndex()].checkIn(tempMem));
+        System.out.println(fClass.checkIn(tempMem, memType));
     }
+
 
     /**
      * Imports historical member information from a memberList.txt file
@@ -250,13 +351,33 @@ public class GymManager {
             }
         }
         catch(FileNotFoundException e) {
-            System.out.printf("%S not found in project directory", MEMBER_LIST);
+            System.out.printf("%s not found in project directory", MEMBER_LIST);
+            throw new RuntimeException(e);
         }
+        System.out.println("-list of members loaded-");
+        database.print();
     }
 
     private void loadSchedule(){
         File file = new File(CLASS_SCHEDULE);
-
+        try{
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                StringTokenizer tk = new StringTokenizer(sc.nextLine(), " ");
+                classSchedule.add(
+                        new FitnessClass(
+                                idClassType(tk.nextToken()),
+                                tk.nextToken(),
+                                Time.getTime(tk.nextToken()),
+                                Location.idLocation(tk.nextToken())
+                        )
+                );
+            }
+        displayClassSchedule();
+        } catch (FileNotFoundException e) {
+            System.out.printf("%S not found in project directory", CLASS_SCHEDULE);
+            throw new RuntimeException(e);
+        }
     }
     /**
      * Checks operation and calls corresponding method
@@ -293,10 +414,16 @@ public class GymManager {
                 displayClassSchedule();
                 break;
             case "C":
-                addOrDropClass(sc, Operation.CHK);
+                addOrDropClass(sc, Operation.CHK, Operation.M);
+                break;
+            case "CG":
+                addOrDropClass(sc, Operation.CHK, Operation.G);
                 break;
             case "D":
-                addOrDropClass(sc, Operation.DROP);
+                addOrDropClass(sc, Operation.DROP, Operation.M);
+                break;
+            case "DG":
+                addOrDropClass(sc, Operation.DROP, Operation.G);
                 break;
             case "LS":
                 loadSchedule();
@@ -304,6 +431,10 @@ public class GymManager {
             case "LM":
                 importMembers();
                 break;
+            case "PF":
+                this.database.printMemberShipFee();
+
+
             default:
                 System.out.println(op + " is an invalid command!\n");
         }

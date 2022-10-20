@@ -6,6 +6,7 @@ public class Family extends Member{
 
 //    private final double ONE_TIME_FEE = 29.99;
     protected final double FAMILY_FEE_PER_MONTH = 59.99;
+    protected int guestPasses;
 
     public double getFAMILY_FEE_PER_MONTH() {
         return FAMILY_FEE_PER_MONTH;
@@ -13,10 +14,12 @@ public class Family extends Member{
 
     public Family(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
+        this.guestPasses=1;
     }
 
     public Family(String fname, String lname, Date dob, Date expire, Location location) {
         super(fname, lname, dob, expire, location);
+        this.guestPasses=1;
     }
 
 
@@ -24,6 +27,34 @@ public class Family extends Member{
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
         return df.format(this.MEMBER_ONE_TIME_FEE + FAMILY_FEE_PER_MONTH * 3);
+    }
+
+    public boolean hasGuestPasses() {
+        return guestPasses != 0;
+    }
+
+    public boolean useGuestPass(){
+        if(guestPasses==0)
+            return false;
+        guestPasses--;
+        return true;
+    }
+
+    public void returnGuestPass(){
+        guestPasses++;
+    }
+
+    @Override
+    public String toString() {
+        return (
+                this.fname + ", " +
+                        this.lname +
+                        " DOB: " + this.dob.toString() +
+                        ", Membership expires: " + this.expire.toString() + ", " +
+                        "Location: " + this.location.toString()+
+                        ", (Family) " +
+                        "Guest-pass remaining: " + guestPasses
+        );
     }
 
     public static void main(String[] args) {

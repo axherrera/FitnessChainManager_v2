@@ -159,7 +159,7 @@ public class Member implements Comparable<Member>{
     public boolean equals(Object obj) {
         if(this == obj)
             return true;
-        if(obj == null || obj.getClass() != this.getClass()){
+        if(!(obj instanceof Member)){
             return false;
         }
         Member mem = (Member) obj;
@@ -205,7 +205,6 @@ public class Member implements Comparable<Member>{
         Location location1 = Location.FRANKLIN;
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
-
 
         Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);

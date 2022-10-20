@@ -15,7 +15,6 @@ public enum Location {
     private final String zipcode;
     private final String county;
     private final int rank;
-
     /**
      * To get the township
      * @return township
