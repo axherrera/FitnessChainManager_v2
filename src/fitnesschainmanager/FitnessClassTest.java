@@ -19,7 +19,7 @@ class FitnessClassTest {
     }
 
     @Test
-    void dropClass() {
+    void dropClassMembers() {
 
         Location location1 = Location.SOMERVILLE;
         Date date1 = new Date("01/02/2026");
