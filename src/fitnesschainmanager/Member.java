@@ -206,7 +206,6 @@ public class Member implements Comparable<Member>{
         Location location4 = Location.PISCATAWAY;
         Location location5 = Location.SOMERVILLE;
 
-
         Member member1 = new Member("Gibre", "Lukas ", date1, date2, location1);
         Member member2 = new Member("Tomas", "Mike ", date1, date2, location2);
         Member member3 = new Member("Micheal", "Tomas ", date2, date1, location3);

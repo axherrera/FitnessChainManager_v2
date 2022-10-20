@@ -63,6 +63,7 @@ public class FitnessClass {
      * @param member member of the gym fitness
      * @param memType operation to be done. Can either be a guest or member addition
      */
+
     public String checkIn(Member member, Operation memType){
         if(memType==Operation.G){
             guests.add(member);
@@ -121,4 +122,6 @@ public class FitnessClass {
         else
             checkedIn.printDatabase();
     }
+
+
 }
