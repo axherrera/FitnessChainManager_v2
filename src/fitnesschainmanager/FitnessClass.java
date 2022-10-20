@@ -115,7 +115,10 @@ public class FitnessClass {
      * It prints class information as well as all members attending
      * If class is empty, does not attempt to print out the participant list
      */
-    public void classRoster() {
-        checkedIn.printDatabase();
+    public void classRoster(Operation type) {
+        if(type == Operation.G)
+            guests.printDatabase();
+        else
+            checkedIn.printDatabase();
     }
 }

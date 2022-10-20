@@ -44,6 +44,19 @@ public class Family extends Member{
         guestPasses++;
     }
 
+    @Override
+    public String toString() {
+        return (
+                this.fname + ", " +
+                        this.lname +
+                        " DOB: " + this.dob.toString() +
+                        ", Membership expires: " + this.expire.toString() + ", " +
+                        "Location: " + this.location.toString()+
+                        ", (Family) " +
+                        "Guest-pass remaining: " + guestPasses
+        );
+    }
+
     public static void main(String[] args) {
         Date date1 = new Date("01/02/2026");
         Date date2 = new Date("01/02/2022");

@@ -3,9 +3,23 @@ package fitnesschainmanager;
 import java.text.DecimalFormat;
 
 public class Premium extends Family{
+
     public Premium(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
         this.guestPasses = 3;
+    }
+
+    @Override
+    public String toString() {
+        return (
+                this.fname + ", " +
+                        this.lname +
+                        " DOB: " + this.dob.toString() +
+                        ", Membership expires: " + this.expire.toString() + ", " +
+                        "Location: " + this.location.toString()+
+                        ", (Premium) " +
+                        "Guest-pass remaining: " + guestPasses
+        );
     }
 
     public Premium(String fname, String lname, Date dob, Date expire, Location location) {

@@ -159,7 +159,7 @@ public class Member implements Comparable<Member>{
     public boolean equals(Object obj) {
         if(this == obj)
             return true;
-        if(obj == null || obj.getClass() != this.getClass()){
+        if(!(obj instanceof Member)){
             return false;
         }
         Member mem = (Member) obj;

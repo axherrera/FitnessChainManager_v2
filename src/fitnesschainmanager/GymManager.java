@@ -1,6 +1,7 @@
 package fitnesschainmanager;
 
 import java.io.FileNotFoundException;
+import java.nio.file.OpenOption;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.File;
@@ -119,7 +120,7 @@ public class GymManager {
      */
     private boolean classTimeConflict(Member tempMem, FitnessClass tempClass, Operation type){
         for(FitnessClass fitnessClass: classSchedule.getClasses()){
-            if(fitnessClass.find(tempMem, type)==null)
+            if(fitnessClass==null || fitnessClass.find(tempMem, type)==null)
                 continue;
             if(fitnessClass!=tempClass && fitnessClass.getTime()==tempClass.getTime()){
                 System.out.printf(
@@ -152,9 +153,9 @@ public class GymManager {
      * @return boolean that shows whether member can check into class or not
      */
     private boolean checkInValidate(Member tempMem, FitnessClass tempClass, Operation type) {
-        if(tempMem instanceof Family){
+        if(tempMem instanceof Family ){
             if(!((Family) tempMem).hasGuestPasses()){
-                System.out.println("No guest-passes remaining");
+                System.out.printf("%s %s ran out of guest passes\n", tempMem.getFname(), tempMem.getLname());
                 return false;
             }
 
@@ -162,27 +163,35 @@ public class GymManager {
         //validate that member can check in
         if(tempMem.getLocation()!=tempClass.getLocation()){
             if(!(tempMem instanceof Family)){
-                System.out.printf("%s %s checking in %s - standard membership location restriction",
-                        tempMem.getFname(),
-                        tempMem.getLname(),
-                        tempClass.getLocation().toString()
-                );
+                if(type == Operation.G){
+                    System.out.println("Standard membership - guest check-in is not allowed.\n");
+                }
+                else{
+                    System.out.printf("%s %s checking in %s - standard membership location restriction\n",
+                            tempMem.getFname(),
+                            tempMem.getLname(),
+                            tempClass.getLocation().toString()
+                    );
+                }
+                return false;
             }
             else{
                 if(type == Operation.G){
                     System.out.printf(
-                            "%s %s Guest checking in %s - guest location restriction",
+                            "%s %s Guest checking in %s - guest location restriction\n",
                             tempMem.getFname(),
                             tempMem.getLname(),
                             tempClass.getLocation().toString()
                     );
                 }
             }
+            return true;
         }
         //validate that there are no time conflicts no need to check for guests
-        if(!classTimeConflict(tempMem, tempClass, type))
-            return false;
-        else if(type==Operation.G)
+        if(type != Operation.G) {
+            return classTimeConflict(tempMem, tempClass, type);
+        }
+        else
             ((Family) tempMem).useGuestPass();
         return true;
     }
@@ -234,7 +243,12 @@ public class GymManager {
             if(fitnessClass.checkedIn.isEmpty())
                 continue;
             System.out.println("   ** participants **");
-            fitnessClass.classRoster();
+            fitnessClass.classRoster(Operation.M);
+
+            if(fitnessClass.guests.isEmpty())
+                continue;
+            System.out.println("   ** guests **");
+            fitnessClass.classRoster(Operation.G);
         }
         System.out.println("-end of class list-");
     }
@@ -247,21 +261,25 @@ public class GymManager {
         }
         boolean temp = false;//checks if instructor exists for class
         for(FitnessClass c : classSchedule.getClasses()){
+            if(c==null)
+                continue;
             if(c.getInstructor().equalsIgnoreCase(instructor)){
                 temp = true;
                 break;
             }
         }
         if(!temp){
-            System.out.printf("%s - does not exist.\n", instructor);
+            System.out.printf("%s - instructor does not exist.\n", instructor);
             return null;
         }
         Location l = Location.idLocation(location);
         if( l ==Location.NA){//check if location exists
-            System.out.printf("%s - invalid locaiton.");
+            System.out.printf("%s - invalid location.\n", location);
             return null;
         }
         for(FitnessClass c : classSchedule.getClasses()){
+            if(c == null)
+                continue;
             if(c.getInstructor().equalsIgnoreCase(instructor)
                     && c.getLocation()==l
                     && c.getClassType()==classtype
@@ -271,10 +289,6 @@ public class GymManager {
         }
         System.out.printf("%s by %s does not exist at %s.\n", isClass, instructor, location);
         return null;
-    }
-
-    private void drop(FitnessClass fitnessClass, Member member, Operation memType){
-        System.out.println(classSchedule.getFitnessClass(fitnessClass).dropClass(member, memType));
     }
 
     /**
@@ -309,7 +323,7 @@ public class GymManager {
             System.out.println(classSchedule.getFitnessClass(fClass).dropClass(tempMem, memType));
             return;
         }
-        if (!checkInValidate(tempMem, fClass, op))
+        if (!checkInValidate(tempMem, fClass, memType))
             return;
         if (!dateValidation(fname, lname, tempMem.getExpire(), Operation.EXP))
             return;
@@ -417,6 +431,10 @@ public class GymManager {
             case "LM":
                 importMembers();
                 break;
+            case "PF":
+                this.database.printMemberShipFee();
+
+
             default:
                 System.out.println(op + " is an invalid command!\n");
         }
