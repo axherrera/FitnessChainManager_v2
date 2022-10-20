@@ -1,15 +1,27 @@
 package fitnesschainmanager;
 
+/**
+ * The ClassSchedule class holds a growable array of FitnessClass objects which is used to maintain a database of all
+ * classes offered by the gym.
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
+ */
 public class ClassSchedule {
     private FitnessClass[] classes;
     private int numClasses;
     private final int NOT_FOUND = -1;
 
+    /**
+     * Constructor for ClassSchedule object. Will set FitnessClass array siz at 4 by default
+     */
     public ClassSchedule(){
         classes = new FitnessClass[4];
         numClasses = 4;
     }
 
+    /**
+     * Getter for all classes in the schedule
+     * @return returns array of FitnessClass which holds all fitness classes in the schedule
+     */
     public FitnessClass[] getClasses() {
         return classes;
     }
@@ -38,6 +50,10 @@ public class ClassSchedule {
         return true;
     }
 
+    /**
+     * Checks if the schedule is empty
+     * @return boolean true if schedule is empty, false if not
+     */
     public boolean isEmpty(){
         for(int i = 0; i < numClasses; i++){
             if(classes[i] != null)

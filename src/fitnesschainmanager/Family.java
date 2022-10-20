@@ -2,37 +2,62 @@ package fitnesschainmanager;
 
 import java.text.DecimalFormat;
 
+/**
+ * A class Family is a child of the Member class and represents a Family membership
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
+ */
 public class Family extends Member{
 
-//    private final double ONE_TIME_FEE = 29.99;
     protected final double FAMILY_FEE_PER_MONTH = 59.99;
     protected int guestPasses;
 
-    public double getFAMILY_FEE_PER_MONTH() {
-        return FAMILY_FEE_PER_MONTH;
-    }
-
+    /**
+     *Constructor for Family object
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param location location
+     */
     public Family(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
         this.guestPasses=1;
     }
 
+    /**
+     * Constructor for Family object
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param expire expiration date
+     * @param location location
+     */
     public Family(String fname, String lname, Date dob, Date expire, Location location) {
         super(fname, lname, dob, expire, location);
         this.guestPasses=1;
     }
 
-
+    /**
+     * Overrides MemberShipFee() from member
+     * @return membership fee for Family
+     */
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
         return df.format(this.MEMBER_ONE_TIME_FEE + FAMILY_FEE_PER_MONTH * 3);
     }
 
+    /**
+     * Checks if member has available guest passes
+     * @return boolean
+     */
     public boolean hasGuestPasses() {
         return guestPasses != 0;
     }
 
+    /**
+     * Will check if a guest pass is able to be used. If so decrement guest passes
+     * @return return true if guest pass used, false if there are no more available guest passes
+     */
     public boolean useGuestPass(){
         if(guestPasses==0)
             return false;
@@ -40,10 +65,17 @@ public class Family extends Member{
         return true;
     }
 
+    /**
+     * Will increment the instance variable guestPasses
+     */
     public void returnGuestPass(){
         guestPasses++;
     }
 
+    /**
+     * Will override toString method
+     * @return return information about Family member
+     */
     @Override
     public String toString() {
         return (

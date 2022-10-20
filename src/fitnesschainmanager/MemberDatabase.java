@@ -129,6 +129,9 @@ public class MemberDatabase {
         System.out.println("-end of list-\n");
     }
 
+    /**
+     * Prints database by membership fee
+     */
     public void printMemberShipFee() {
         for(int i = 0; i < size; i++){
             if(this.mlist[i] != null)

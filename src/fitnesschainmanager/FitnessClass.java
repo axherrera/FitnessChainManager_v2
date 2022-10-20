@@ -46,6 +46,11 @@ public class FitnessClass {
         return instructor;
     }
 
+    /**
+     * It overrides the equals method
+     * @param obj obejct
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if(this == obj)
@@ -107,6 +112,11 @@ public class FitnessClass {
             return this.guests.getMember(m);
         return this.checkedIn.getMember(m);
     }
+
+    /**
+     * Overrides toString method
+     * @return Fitness Class information
+     */
     @Override
     public String toString(){
         return classInfo;
