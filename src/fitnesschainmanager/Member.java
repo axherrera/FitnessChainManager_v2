@@ -16,6 +16,13 @@ public class Member implements Comparable<Member>{
     protected final double MEMBER_ONE_TIME_FEE = 29.99;
     private final double MEMBER_MONTHLY_FEE = 39.99;
 
+    /**
+     * The constructor of the Member class. Sets custom expiration date depending on membership type
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param location location
+     */
     public Member(String fname, String lname, Date dob, Location location){
         this.fname = fname;
         this.lname = lname;
@@ -54,27 +61,11 @@ public class Member implements Comparable<Member>{
     }
 
     /**
-     * To set the first name
-     * @param fname first name
-     */
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    /**
      * To get the last name
      * @return last name
      */
     public String getLname() {
         return this.lname;
-    }
-
-    /**
-     * To set the last name
-     * @param lname last name
-     */
-    public void setLname(String lname) {
-        this.lname = lname;
     }
 
     /**
@@ -102,14 +93,6 @@ public class Member implements Comparable<Member>{
     }
 
     /**
-     * To set the expiration date
-     * @param expire expiration
-     */
-    public void setExpire(Date expire) {
-        this.expire = expire;
-    }
-
-    /**
      * To get the location
      * @return location
      */
@@ -126,10 +109,9 @@ public class Member implements Comparable<Member>{
     }
 
     /**
-     * It overrides the toString method
-     * @return first name, last name, date of birth and expiration date
+     * Creates String of member information including membership fee
+     * @return return string of member information
      */
-
     public String printMembership() {
         return (
                 this.fname + ", " +
@@ -139,6 +121,11 @@ public class Member implements Comparable<Member>{
                         "Location: " + this.location.toString() + ", Membership fee: " + this.MemberShipFee()
         );
     }
+
+    /**
+     * It overrides the toString method
+     * @return first name, last name, date of birth and expiration date
+     */
     @Override
     public String toString() {
         return (

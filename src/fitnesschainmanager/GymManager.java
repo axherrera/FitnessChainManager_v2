@@ -253,6 +253,15 @@ public class GymManager {
         System.out.println("-end of class list-");
     }
 
+    /**
+     * method that takes user input and checks whetehr or not the class detailed by input corresponds
+     * to a real class in the class schedule. If the class queried is a real class, method will return
+     * a reference to the class in the ClassSchedule object. Otherwise, it will return null.
+     * @param isClass type of class being queried
+     * @param instructor instructor for the class
+     * @param location location at which class is taking place
+     * @return If the class exists in ClassSchedule return reference to the class, else return null
+     */
     public FitnessClass classValidation(String isClass, String instructor, String location){
         ClassType classtype = idClassType(isClass);
         if(classtype == ClassType.NA) {//check if class exists
@@ -333,7 +342,7 @@ public class GymManager {
 
 
     /**
-     * Imports historical member information from a memberList.txt file
+     * Imports historical member information from the text file named memberList.txt located in the source directory
      * This method assumes that all historical members hav valid member information, therefore
      * forgoing new member information validation.
      */
@@ -358,6 +367,10 @@ public class GymManager {
         database.print();
     }
 
+    /**
+     * Loads the class schedule from the text file. File must be named "classSchedule.txt" and be located
+     * in the project source directory
+     */
     private void loadSchedule(){
         File file = new File(CLASS_SCHEDULE);
         try{

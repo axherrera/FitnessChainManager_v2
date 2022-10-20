@@ -2,13 +2,28 @@ package fitnesschainmanager;
 
 import java.text.DecimalFormat;
 
+/**
+ * A class Family is a child of the Family class and represents a Premium membership
+ * @author ALEJANDRO HERRERA-PINEDA, HURUY BELAY
+ */
 public class Premium extends Family{
 
+    /**
+     * Constructor for Premium object
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param location location
+     */
     public Premium(String fname, String lname, Date dob, Location location) {
         super(fname, lname, dob, location);
         this.guestPasses = 3;
     }
 
+    /**
+     * Overrides the toString() method
+     * @return returns information about Premium object
+     */
     @Override
     public String toString() {
         return (
@@ -22,11 +37,23 @@ public class Premium extends Family{
         );
     }
 
+    /**
+     * Constructor for Premium object, includes expiration date setting
+     * @param fname first name
+     * @param lname last name
+     * @param dob date of birth
+     * @param expire expiration date
+     * @param location location
+     */
     public Premium(String fname, String lname, Date dob, Date expire, Location location) {
         super(fname, lname, dob, expire, location);
         this.guestPasses = 3;
     }
 
+    /**
+     * Override the MemberShipFee() method
+     * @return will return a String corresponding to Premium membership fee
+     */
     @Override
     public String MemberShipFee(){
         DecimalFormat df = new DecimalFormat("0.##");
